@@ -24,6 +24,7 @@ import { from } from 'rxjs';
 import { IncluirPublicacaoComponent } from './home/incluir-publicacao/incluir-publicacao.component';
 import { ProcurarComponent } from './procurar/procurar.component';
 import { UsuariosComponent } from './procurar/usuarios/usuarios.component';
+import { PerfilComponent } from './perfil/perfil.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { UsuariosComponent } from './procurar/usuarios/usuarios.component';
     IncluirPublicacaoComponent,
     CadastroArtistaComponent,
     ProcurarComponent,
-    UsuariosComponent
+    UsuariosComponent,
+    PerfilComponent
   ],
   imports: [
     BrowserModule,

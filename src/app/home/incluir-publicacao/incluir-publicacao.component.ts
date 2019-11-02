@@ -2,6 +2,7 @@ import { Progresso } from './../../progresso.service'
 import { Bd } from './../../bd.service'
 import { FormGroup, FormControl } from '@angular/forms'
 import { Component, OnInit, EventEmitter, Output } from '@angular/core'
+import { ViewChild, ElementRef } from '@angular/core';
 import * as firebase from 'firebase'
 import 'rxjs/Rx'
 import { Observable } from 'rxjs/Observable'
@@ -15,6 +16,7 @@ import { Subject } from 'rxjs/Rx'
 })
 export class IncluirPublicacaoComponent implements OnInit {
 
+  @ViewChild('uploadModal') uploadModal: ElementRef;
   public formulario: FormGroup = new FormGroup({
     'descricao': new FormControl(null)
   })
@@ -67,12 +69,22 @@ export class IncluirPublicacaoComponent implements OnInit {
           this.porcentagemUpload = Math.round((this.progresso.estado.bytesTransferred / this.progresso.estado.totalBytes) * 100)
           if (this.progresso.status === 'concluido'){
             continua.next(false)
-            this.progressoPublicacao = 'concluido'
-            this.atualizarTimeline.emit()
-            
+            this.progressoPublicacao = 'concluido';
+            this.atualizarTimeline.emit();
+            this.resetForm();
           }
         })
 
+
+
+  }
+
+
+  public resetForm(): void {
+    this.formulario = new FormGroup({
+      'descricao': new FormControl(null)
+    })
+    this.progressoPublicacao = "pendente";
   }
 
 
