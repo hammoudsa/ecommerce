@@ -1,0 +1,15 @@
+.navbar {
+    height: 77px;
+    padding: 26px 40px;
+    width: 100%;
+    border-bottom: solid 1px #E6E6E6;
+}
+
+.logo {
+    background-image: url('/assets/logo-showin.png');
+    background-size: 180px;
+    background-repeat: no-repeat;
+    width: 180px;
+    height: 50px;
+    float: left;
+}

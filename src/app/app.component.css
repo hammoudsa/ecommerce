@@ -1,0 +1,17 @@
+div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    padding-top: 5%
+}
+
+.bg-padrao{
+    background-image: url("/assets/banner-acesso/background.jpg");
+   
+}
+
+.bg-home{
+    background: rgb(255, 255, 255);
+   
+}

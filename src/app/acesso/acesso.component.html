@@ -1,0 +1,29 @@
+<div class="bg-login">
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 d-flex justify-content-end">
+      <app-banner></app-banner>
+    </div>
+
+    <div *ngIf="valor === 1; else formLogin">
+        <div class="col-sm-6 d-flex justify-content-start">
+            <app-cadastro (exibirPainel)="exibirPainel($event)"></app-cadastro>
+            </div>  
+    </div>
+    
+    <div *ngIf="valor === 2;">
+        <div class="col-sm-6 d-flex justify-content-start">
+            <app-cadastro-artista (exibirPainel)="exibirPainel($event)"></app-cadastro-artista>
+            </div>  
+    </div>
+
+    <ng-template #formLogin>
+        <div *ngIf="valor === 0;">
+        <div class="col-sm-6 d-flex justify-content-start">
+            <app-login (exibirPainel)="exibirPainel($event)"></app-login>
+            </div>
+          </div>
+    </ng-template>
+  </div>
+</div>
+</div>

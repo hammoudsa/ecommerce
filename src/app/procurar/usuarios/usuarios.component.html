@@ -1,0 +1,31 @@
+<div class="row" *ngFor="let artista of artistas">
+    <div class="col d-flex justify-content-center">
+      <div class="card">
+        <div class="card-body">
+          <img class="card-img" src="https://i1.sndcdn.com/artworks-000544258245-ongnzz-t500x500.jpg" />
+          <p id="nomeUsuario" class="card-text artist"><strong>{{ artista.nome_usuario }} </strong></p>
+          <p class="genre">{{ artista.genero }}</p>
+          <input id="artista.nome_usuario" type="checkbox" (click)="seguir(artista.nome_usuario, artista.key)" />	
+        </div> 
+  
+        
+      
+      </div>
+    </div>
+</div>
+
+<div class="row" *ngFor="let usuario of usuarios">
+    <div class="col d-flex justify-content-center">
+      <div class="card">
+        <div class="card-body">
+          <p class="card-text"><strong>@{{ usuario.nome_usuario }}</strong></p>
+        </div>
+  
+        <!-- <img class="card-img" [src]="publicacao.url_imagem || ''" /> -->
+      
+      </div>
+    </div>
+</div>
+
+
+  

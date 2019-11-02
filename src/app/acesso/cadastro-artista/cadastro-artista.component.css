@@ -1,0 +1,29 @@
+.card-title {
+    background-image: url("/assets/logo-showin.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 60px;
+    width: 100%;
+}
+
+.styled-select select {
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    height: 29px;
+    padding: 5px; /* If you add too much padding here, the options won't show in IE */
+    width: 278px;
+ }
+ 
+ .styled-select.slate {
+    height: 34px;
+    width: 278px;
+    margin-bottom: 20px;
+ }
+ 
+ .styled-select.slate select {
+    border: 1px solid #ccc;
+    font-size: 16px;
+    height: 34px;
+    width: 278px;
+ }

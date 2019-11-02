@@ -1,0 +1,13 @@
+import { ProcurarComponent } from './procurar/procurar.component';
+import { AutenticacaoGuard } from './autenticacao-guard.service';
+import { Routes } from '@angular/router'
+import { AcessoComponent } from './acesso/acesso.component';
+import { HomeComponent } from './home/home.component';
+
+
+
+export const ROUTES: Routes = [
+    {path: '', component: AcessoComponent},
+    {path: 'home', component: HomeComponent, canActivate: [ AutenticacaoGuard ] },
+    {path: 'procurar', component: ProcurarComponent, canActivate: [ AutenticacaoGuard ] }
+]
