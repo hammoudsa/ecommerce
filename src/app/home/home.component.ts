@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
   }
 
   public home(): void {
-    window.location.reload()
+    this.router.navigate(['/home'])
     
   }
 

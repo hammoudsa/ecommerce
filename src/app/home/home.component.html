@@ -1,10 +1,13 @@
 <nav class="navbar fixed-top navbar-light bg-white">
   <div class="container">
     <div class="logo" (click)="home()"></div>
+    
     <div>
       <div class="search" (click)="procurar()"></div>
       <div class="add-post" data-toggle="modal" data-target="#uploadModal"></div>
-      <a class="sair" href="#" (click)="sair()" style="margin-left: 15px">Sair</a>
+      <!--<a class="sair" href="#" (click)="sair()" style="margin-left: 15px">Sair</a>-->
+      <div class="perfil" (click)="meuperfil()"></div>
+      <!--<button type="button" class="btn btn-primary">Meu perfil</button>-->
     </div>
   </div>  
 </nav>
@@ -13,5 +16,5 @@
 <div class="container">
   <app-publicacoes #publicacoes></app-publicacoes>
   <app-incluir-publicacao (atualizarTimeline)="atualizarTimeline()"></app-incluir-publicacao>   
-  <button type="button" class="btn btn-primary">Meu perfil</button>
+
 </div>

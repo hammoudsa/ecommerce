@@ -47,32 +47,16 @@ export class UsuariosComponent implements OnInit {
     
     let element = <HTMLInputElement> document.getElementById("artista.nome_usuario");  
     console.log(nomeUsuario, " ", key)
-
-  
-    this.usuario.nome = nomeUsuario;
-
-
-/*     if(this.usuario.nome == nomeUsuario && this.usuario.seguido == 1){
-      this.listaSeguindo.splice(this.listaSeguindo.indexOf(key)) 
-
-    }
-    if(this.usuario.nome == nomeUsuario && this.usuario.seguido == 0){
-      alert('seguindo')
-      this.listaSeguindo.push(key)
-      console.log(this.listaSeguindo)
-      this.usuario.seguido = 1;
-
-    } */
-
+    //console.log(document.getElementById("artista.nome_usuario"))
+    
     if (element.checked) { 
       this.listaSeguindo.push(key)
       console.log(this.listaSeguindo)
-
-    }
-    else{
-      /* this.listaSeguindo.splice(this.listaSeguindo.indexOf(key)) */
-      console.log(this.listaSeguindo.indexOf(key))
-    }
+      
+    }else{
+      this.listaSeguindo.splice(this.listaSeguindo.indexOf(key), 1)
+      console.log(this.listaSeguindo)  
+    } 
   }
 
 }
