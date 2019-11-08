@@ -25,6 +25,7 @@ import { IncluirPublicacaoComponent } from './home/incluir-publicacao/incluir-pu
 import { ProcurarComponent } from './procurar/procurar.component';
 import { UsuariosComponent } from './procurar/usuarios/usuarios.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import { InformacoesComponent } from './perfil/informacoes/informacoes.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { PerfilComponent } from './perfil/perfil.component';
     CadastroArtistaComponent,
     ProcurarComponent,
     UsuariosComponent,
-    PerfilComponent
+    PerfilComponent,
+    InformacoesComponent
   ],
   imports: [
     BrowserModule,

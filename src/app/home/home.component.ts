@@ -34,6 +34,11 @@ export class HomeComponent implements OnInit {
     
   }
 
+  public meuPerfil(): void {
+    this.router.navigate(['/perfil'])
+    
+  }
+
   public atualizarTimeline(): void{
    this.publicacoes.atualizarTimeLine()
   }

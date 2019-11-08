@@ -1,3 +1,16 @@
-<p>
-  perfil works!
-</p>
+<nav class="navbar fixed-top navbar-light bg-white">
+  <div class="container">
+    <div class="logo" (click)="home()"></div>
+    
+    <div>
+      <div class="search" (click)="procurar()"></div>
+      <div class="perfil" (click)="meuPerfil()"></div>
+      <a class="sair" href="#" (click)="sair()" style="margin-left: 15px">Sair</a>
+      <!--<button type="button" class="btn btn-primary">Meu perfil</button>-->
+    </div>
+  </div>  
+</nav>
+<br />
+<div class="container">
+  <app-informacoes #usuarios (atualizarTimeline)="atualizarTimeline()"></app-informacoes>
+</div>

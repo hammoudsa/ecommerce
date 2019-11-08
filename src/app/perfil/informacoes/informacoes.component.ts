@@ -4,21 +4,20 @@ import { Component, OnInit } from '@angular/core';
 import * as firebase from 'firebase' 
 
 @Component({
-  selector: 'app-usuarios',
-  templateUrl: './usuarios.component.html',
-  styleUrls: ['./usuarios.component.css']
+  selector: 'app-informacoes',
+  templateUrl: './informacoes.component.html',
+  styleUrls: ['./informacoes.component.css']
 })
-export class UsuariosComponent implements OnInit {
+export class InformacoesComponent implements OnInit {
 
   public email: string
   public usuarios: any
-  public artistas: any
+  public artista: any
   public listaSeguindo: Array<String> = [];
   public usuario = {
     nome: '',
     seguido: 0
   }
-
 
   constructor(private bd: Bd) { }
 
@@ -39,24 +38,8 @@ export class UsuariosComponent implements OnInit {
       this.bd.consultaArtistas()
       .then((listaArtistas: any) =>{
         console.log('usuario component === ', listaArtistas)
-        this.artistas = listaArtistas
+        this.artista = listaArtistas
       })
-  }
-
-  public seguir(nomeUsuario: string, key: string ): void{
-
-    let element = <HTMLInputElement> document.getElementById("artista.nome_usuario");  
-
-    console.log(nomeUsuario, " ", key)
-    
-    if (element.checked) { 
-      this.listaSeguindo.push(key)
-      console.log(this.listaSeguindo)
-      
-    }else{
-      this.listaSeguindo.splice(this.listaSeguindo.indexOf(key), 1)
-      console.log(this.listaSeguindo)  
-    } 
   }
 
 }

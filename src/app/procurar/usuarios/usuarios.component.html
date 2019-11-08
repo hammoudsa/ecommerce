@@ -5,7 +5,7 @@
           <img class="card-img" src="https://i1.sndcdn.com/artworks-000544258245-ongnzz-t500x500.jpg" />
           <p [id]="artista.nome_usuario" class="card-text artist"><strong>{{ artista.nome_usuario }} </strong></p>
           <p class="genre">{{ artista.genero }}</p>
-          <input id="artista.nome_usuario" type="checkbox" (click)="seguir(artista.nome_usuario, artista.key)" />	
+          <input class = "botao" [id]="artista.nome_usuario" type="checkbox" (click)="seguir(artista.nome_usuario, artista.key)" />	
         </div> 
   
         
