@@ -45,18 +45,25 @@ export class UsuariosComponent implements OnInit {
 
   public seguir(nomeUsuario: string, key: string ): void{
 
-    let element = <HTMLInputElement> document.getElementById("artista.nome_usuario");  
+    let element = <HTMLInputElement> document.getElementById(nomeUsuario);  
 
-    console.log(nomeUsuario, " ", key)
+    //console.log(nomeUsuario, " ", key)
+
+    console.log(element)
+
+    
     
     if (element.checked) { 
-      this.listaSeguindo.push(key)
-      console.log(this.listaSeguindo)
+/*       this.listaSeguindo.push(key)
+      console.log(this.listaSeguindo) */
+      console.log('teste')
       
-    }else{
+    }
+ /*    else
+    {
       this.listaSeguindo.splice(this.listaSeguindo.indexOf(key), 1)
       console.log(this.listaSeguindo)  
-    } 
+    }   */
   }
 
 }

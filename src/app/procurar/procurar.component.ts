@@ -36,6 +36,11 @@ export class ProcurarComponent implements OnInit {
     this.router.navigate(['/procurar'])
     
   }
+
+  public meuPerfil(): void {
+    this.router.navigate(['/perfil'])
+    
+  }
    
 
 }

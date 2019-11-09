@@ -32,7 +32,12 @@ export class InformacoesComponent implements OnInit {
     this.bd.consultaUsuarios()
       .then((listaUsuarios: any) =>{
         console.log('usuario component === ', listaUsuarios)
-        this.usuarios = listaUsuarios
+        //this.usuarios = listaUsuarios
+
+        for(let i=0; i<listaUsuarios; i++){
+            console.log(i)
+        }
+
       })
 
       this.bd.consultaArtistas()
