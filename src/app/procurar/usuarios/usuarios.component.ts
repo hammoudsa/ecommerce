@@ -14,11 +14,7 @@ export class UsuariosComponent implements OnInit {
   public usuarios: any
   public artistas: any
   public listaSeguindo: Array<String> = [];
-  public usuario = {
-    nome: '',
-    seguido: 0
-  }
-
+  
 
   constructor(private bd: Bd) { }
 
@@ -43,27 +39,29 @@ export class UsuariosComponent implements OnInit {
       })
   }
 
+
+
+
+
+
   public seguir(nomeUsuario: string, key: string ): void{
 
     let element = <HTMLInputElement> document.getElementById(nomeUsuario);  
 
-    //console.log(nomeUsuario, " ", key)
+    console.log(element.id)
 
-    console.log(element)
-
-    
-    
-    if (element.checked) { 
-/*       this.listaSeguindo.push(key)
-      console.log(this.listaSeguindo) */
-      console.log('teste')
-      
-    }
- /*    else
-    {
+    if(this.listaSeguindo.includes(key)){
       this.listaSeguindo.splice(this.listaSeguindo.indexOf(key), 1)
-      console.log(this.listaSeguindo)  
-    }   */
+      console.log(this.listaSeguindo)
+    }else{
+      this.listaSeguindo.push(key)
+      console.log(this.listaSeguindo)
+    }
+
+
+
+
+
   }
 
 }
