@@ -5,7 +5,7 @@
 }
 .artist {
     color: #000;
-    font-size: 30px;
+    font-size: 180%;
 }
 
 .genre {
@@ -17,11 +17,13 @@
 
 
 .card-img {
+    margin-top: 3%;
     width: 20%;
     border-radius: 100%;
 }
 
 .nomeUsuario{
-    margin-left: 230px;
-    margin-top: -200px;
+    margin-left: 22%;
+    margin-top: -20%;
+    font-size: 80%;
 }

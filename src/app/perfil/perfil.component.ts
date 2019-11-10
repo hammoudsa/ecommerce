@@ -1,6 +1,8 @@
+import { InformacoesComponent } from './informacoes/informacoes.component';
 import { Router } from '@angular/router';
 import { Autenticacao } from './../autenticacao.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+
 
 
 @Component({
@@ -10,6 +12,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PerfilComponent implements OnInit {
 
+@ViewChild('informacoes') public informacoes: any
 
   constructor(private autenticacao: Autenticacao,
               private router: Router) { }
@@ -37,6 +40,9 @@ export class PerfilComponent implements OnInit {
     
   }
 
-  
+  public atualizarTimeLine(): void{
+    this.informacoes.atualizarTimeLine()
+  }
+
 
 }

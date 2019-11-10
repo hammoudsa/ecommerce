@@ -3,6 +3,7 @@ import { Bd } from './../../bd.service';
 import { Component, OnInit } from '@angular/core';
 import * as firebase from 'firebase' 
 
+
 @Component({
   selector: 'app-informacoes',
   templateUrl: './informacoes.component.html',
@@ -19,6 +20,9 @@ export class InformacoesComponent implements OnInit {
     seguido: 0
   }
 
+  public thisUserName: String
+  public thisUser: String
+
   constructor(private bd: Bd) { }
 
   ngOnInit() {
@@ -29,22 +33,31 @@ export class InformacoesComponent implements OnInit {
   }
 
   public atualizarTimeLine(): void {
+    //if usuario or artista
     this.bd.consultaUsuarios()
       .then((listaUsuarios: any) =>{
         console.log('usuario component === ', listaUsuarios)
-        //this.usuarios = listaUsuarios
-
-        for(let i=0; i<listaUsuarios; i++){
-            console.log(i)
+        this.usuarios = listaUsuarios
+      
+        for(let i=0; i<this.usuarios.length; i++){
+          if(this.usuarios[i].usuario.email == this.email){
+            this.thisUserName = this.usuarios[i].usuario.nome_completo
+            this.thisUser = this.usuarios[i].usuario.nome_usuario
+            //console.log(this.usuarios[i].key)
+          }
         }
-
       })
+     
 
       this.bd.consultaArtistas()
       .then((listaArtistas: any) =>{
-        console.log('usuario component === ', listaArtistas)
+        console.log('artista component === ', listaArtistas)
         this.artista = listaArtistas
       })
   }
+
+
+
+  
 
 }

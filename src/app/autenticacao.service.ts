@@ -62,7 +62,6 @@ export class Autenticacao {
             //this.logincomponent.tratarErro()
             //console.log(error)
             this.chamarTratativa(error)
-
         )
         
     }
@@ -109,6 +108,6 @@ export class Autenticacao {
     public sair(){
         localStorage.removeItem('idToken')
     }
-    
+
 
 }
