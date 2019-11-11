@@ -39,15 +39,9 @@ export class UsuariosComponent implements OnInit {
       })
   }
 
-
-
-
-
-
   public seguir(nomeUsuario: string, key: string ): void{
 
     let element = <HTMLInputElement> document.getElementById(nomeUsuario);  
-
     console.log(element.id)
 
     if(this.listaSeguindo.includes(key)){
@@ -57,10 +51,6 @@ export class UsuariosComponent implements OnInit {
       this.listaSeguindo.push(key)
       console.log(this.listaSeguindo)
     }
-
-
-
-
 
   }
 

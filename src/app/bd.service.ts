@@ -11,6 +11,11 @@ export class Bd {
     constructor(private progresso: Progresso){
 
     }
+    public listaTodosUsuarios: Array<any>
+    public listaSeguindo: Array<any>
+    public lista: any
+    public listaPublicacoes: Array<any> = [];
+
 
     public publicar(publicacao: any): void {
              
@@ -47,9 +52,122 @@ export class Bd {
         
     }
 
-    public consultaPublicacoes(emailUsuario: string): Promise<any> {
+    public consultaUsuarios(): Promise<any> {
+
+        
+        return new Promise((resolve, reject)=>{
+
+            firebase.database().ref(`usuario_detalhe`)
+            .once('value')
+            .then((snapshot: any) => {
+
+                let listaUsuarios: Array<any> = [];
+
+                snapshot.forEach((childSnapshot: any) => {
+                    
+                    let usuario = childSnapshot.val()
+                    usuario.key = childSnapshot.key
+                    usuario.nome_usuario = childSnapshot.val().usuario.nome_usuario
+
+                    listaUsuarios.push(usuario)
+
+                }) 
+                resolve(listaUsuarios)  
+                           
+            })  
+                          
+        })
+    }
+
+    public consultaUsuarios2(): Promise<any> {
+
+        
+        return new Promise((resolve, reject)=>{
+
+            firebase.database().ref(`usuario_detalhe`)
+            .once('value')
+            .then((snapshot: any) => {
+
+                let listaUsuarios: Array<any> = [];
+
+                snapshot.forEach((childSnapshot: any) => {
+                    
+                    let usuario = childSnapshot.val()
+                    usuario.key = childSnapshot.key
+                    usuario.nome_usuario = childSnapshot.val().usuario.nome_usuario
+
+                    listaUsuarios.push(usuario)
+
+                }) 
+                resolve(listaUsuarios)        
+            })  
+                          
+        })
+    }
+
+
+    public consultaPublicacoes(): Promise<any> {
+        this.listaSeguindo = ['dGVzdGUwMEBob3RtYWlsLmNvbQ==','ZGVlbm55cy5yYWZmYWVsQG91dGxvb2suY29t'] 
+        
+        this.consultaUsuarios2()
+        .then((listaUsuarios: any) =>{
+            
+            this.lista = ['dGVzdGUwMEBob3RtYWlsLmNvbQ==','ZGVlbm55cy5yYWZmYWVsQG91dGxvb2suY29t']
+        })
+
+        console.log('ttteste', this.lista)  
+        this.listaPublicacoes = []
 
         return new Promise((resolve, reject)=>{
+            console.log(this.lista.length)
+            for(let i=0; i<this.lista.length; i++){
+                if(this.lista.includes(this.listaSeguindo[i])){
+                    firebase.database().ref(`publicacoes/${this.listaSeguindo[i]}`)
+                    .orderByKey()
+                    .once('value')
+                    .then((snapshot: any) => {
+                        
+                        snapshot.forEach((childSnapshot: any) => {
+                            
+                            let publicacao = childSnapshot.val()
+                            publicacao.key = childSnapshot.key
+        
+                            this.listaPublicacoes.push(publicacao)
+        
+                        })                
+         
+                        return this.listaPublicacoes.reverse()  
+                    })
+                     .then((listaPublicacoes: any) => {
+        
+                        listaPublicacoes.forEach((publicacao) => {
+                            //consulta da url da imagem
+                            firebase.storage().ref()
+                            .child(`imagens/${publicacao.key}`)
+                            .getDownloadURL()
+                            .then((url: string) => {
+        
+                                publicacao.url_imagem = url
+                                //consulta nome do usuario da publicação
+                                firebase.database().ref(`usuario_detalhe/${this.listaSeguindo[i]}`)
+                                    .once('value')
+                                    .then((snapshot: any) => {
+                                        publicacao.nome_usuario = snapshot.val().usuario.nome_usuario
+                                    })
+                            }) 
+                        })
+                        resolve(listaPublicacoes)
+                     }) 
+                     console.log('includes')
+                }
+
+
+            }
+        }) 
+
+         
+
+       /*  return new Promise((resolve, reject)=>{
 
             firebase.database().ref(`publicacoes/${btoa(emailUsuario)}`)
             .orderByKey()
@@ -89,34 +207,55 @@ export class Bd {
                 })
                 resolve(listaPublicacoes)
             })
+        })  */
+    }
+
+    public consultaPublicacoes2(): Promise<any> {
+
+        return new Promise((resolve, reject)=>{
+          
+                    firebase.database().ref(`publicacoes/dGVzdGUwMEBob3RtYWlsLmNvbQ==`)
+                    .orderByKey()
+                    .once('value')
+                    .then((snapshot: any) => {
+                        
+                        let listaPublicacoes: Array<any> = [];
+        
+                        snapshot.forEach((childSnapshot: any) => {
+                            
+                            let publicacao = childSnapshot.val()
+                            publicacao.key = childSnapshot.key
+        
+                            listaPublicacoes.push(publicacao)
+        
+                        })                
+         
+                        return listaPublicacoes.reverse()  
+                    })
+                     .then((listaPublicacoes: any) => {
+        
+                        listaPublicacoes.forEach((publicacao) => {
+                            //consulta da url da imagem
+                            firebase.storage().ref()
+                            .child(`imagens/${publicacao.key}`)
+                            .getDownloadURL()
+                            .then((url: string) => {
+        
+                                publicacao.url_imagem = url
+                                //consulta nome do usuario da publicação
+                                firebase.database().ref(`usuario_detalhe/${btoa(this.lista[i].usuario.email)}`)
+                                    .once('value')
+                                    .then((snapshot: any) => {
+                                        publicacao.nome_usuario = snapshot.val().usuario.nome_usuario
+                                    })
+                            }) 
+                        })
+                        resolve(listaPublicacoes)
+                     })
         }) 
     }
 
-    public consultaUsuarios(): Promise<any> {
 
-        return new Promise((resolve, reject)=>{
-
-            firebase.database().ref(`usuario_detalhe`)
-            .once('value')
-            .then((snapshot: any) => {
-               /*  console.log(snapshot.val()) */
-
-                let listaUsuarios: Array<any> = [];
-
-                snapshot.forEach((childSnapshot: any) => {
-                    
-                    let usuario = childSnapshot.val()
-                    usuario.key = childSnapshot.key
-                    usuario.nome_usuario = childSnapshot.val().usuario.nome_usuario
-
-                    listaUsuarios.push(usuario)
-
-                }) 
-                resolve(listaUsuarios)              
-            })  
-                          
-        })
-    }
 
     public consultaArtistas(): Promise<any> {
 
@@ -125,7 +264,6 @@ export class Bd {
             firebase.database().ref(`artista_detalhe`)
             .once('value')
             .then((snapshot: any) => {
-               /*  console.log(snapshot.val()) */
 
                 let listaArtistas: Array<any> = [];
 
@@ -139,7 +277,8 @@ export class Bd {
                     listaArtistas.push(artista)
 
                 }) 
-                resolve(listaArtistas)              
+                resolve(listaArtistas)
+                              
             })  
                           
         })

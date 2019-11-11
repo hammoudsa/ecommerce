@@ -22,7 +22,7 @@ export class PublicacoesComponent implements OnInit {
   }
 
   public atualizarTimeLine(): void {
-    this.bd.consultaPublicacoes(this.email)
+    this.bd.consultaPublicacoes()
       .then((listaPublicacoes: any)=>{
         this.publicacoes = listaPublicacoes
         
