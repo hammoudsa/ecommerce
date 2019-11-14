@@ -13,8 +13,9 @@ export class Bd {
     }
     public listaTodosUsuarios: Array<any>
     public listaSeguindo: Array<any>
-    public lista: any
+    public lista: Array<any>
     public listaPublicacoes: Array<any> = [];
+    public emailUsuario: any
 
 
     public publicar(publicacao: any): void {
@@ -52,9 +53,46 @@ export class Bd {
         
     }
 
+    //funcionando
+    public consultaListaSeguidores(email: any): Promise<any> {
+        this.emailUsuario = email
+
+        return new Promise((resolve, reject)=>{
+
+            firebase.database().ref(`usuario_detalhe/${btoa(this.emailUsuario)}/usuario/listaSeguidores`)
+            .once('value')
+            .then((snapshot: any) => {
+
+                let listaSeg: Array<any> = [];
+
+                snapshot.forEach((childSnapshot: any) => {
+                    
+                    let usuario = childSnapshot.val()
+                    listaSeg.push(usuario)
+
+                }) 
+                resolve(listaSeg)
+                console.log('retorno banco de dados: ', listaSeg)  
+                this.listaSeguindo = listaSeg
+                           
+            })  
+                          
+        })
+    }
+
+
+    public inserirSeguidores(email: any, listaSeguindo: Array<any>): void {
+        this.emailUsuario = email
+        this.lista = ['dGVzdGUwMEBob3RtYWlsLmNvbQ==','ZGVlbm55cy5yYWZmYWVsQG91dGxvb2suY29t']    
+        let userRef = firebase.database().ref(`usuario_detalhe/${btoa(this.emailUsuario)}`)
+        userRef.child('usuario').update({'listaSeguidores': this.lista})
+        console.log('cheguei no insere seguidores')
+  
+ 
+    }
+
     public consultaUsuarios(): Promise<any> {
 
-        
         return new Promise((resolve, reject)=>{
 
             firebase.database().ref(`usuario_detalhe`)
@@ -73,6 +111,7 @@ export class Bd {
 
                 }) 
                 resolve(listaUsuarios)  
+                this.listaTodosUsuarios = listaUsuarios
                            
             })  
                           
@@ -107,15 +146,11 @@ export class Bd {
 
 
     public consultaPublicacoes(): Promise<any> {
-        this.listaSeguindo = ['dGVzdGUwMEBob3RtYWlsLmNvbQ==','ZGVlbm55cy5yYWZmYWVsQG91dGxvb2suY29t'] 
         
-        this.consultaUsuarios2()
-        .then((listaUsuarios: any) =>{
-            
-            this.lista = ['dGVzdGUwMEBob3RtYWlsLmNvbQ==','ZGVlbm55cy5yYWZmYWVsQG91dGxvb2suY29t']
-        })
-
-        console.log('ttteste', this.lista)  
+        console.log('ttteste', this.listaSeguindo)
+        console.log('ttteste', this.listaTodosUsuarios)  
+        this.lista = this.listaSeguindo //fazer o array pegar o key da listaTodosUsuarios
+        //-- teste por enquanto com listaSeguindo -> mudar para listaTodosUsuarios
         this.listaPublicacoes = []
 
         return new Promise((resolve, reject)=>{
@@ -242,8 +277,8 @@ export class Bd {
                             .then((url: string) => {
         
                                 publicacao.url_imagem = url
-                                //consulta nome do usuario da publicação
-                                firebase.database().ref(`usuario_detalhe/${btoa(this.lista[i].usuario.email)}`)
+                                //consulta nome do usuario da publicação            ///verificar erro [i]
+                                firebase.database().ref(`usuario_detalhe/${btoa(this.lista[0].usuario.email)}`)
                                     .once('value')
                                     .then((snapshot: any) => {
                                         publicacao.nome_usuario = snapshot.val().usuario.nome_usuario

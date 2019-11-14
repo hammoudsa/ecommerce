@@ -13,7 +13,8 @@ export class UsuariosComponent implements OnInit {
   public email: string
   public usuarios: any
   public artistas: any
-  public listaSeguindo: Array<String> = [];
+  public listaSeguindo: Array<String> = []
+  public listaRetornoBD: Array<String> = []
   
 
   constructor(private bd: Bd) { }
@@ -22,7 +23,10 @@ export class UsuariosComponent implements OnInit {
     firebase.auth().onAuthStateChanged((user) => {
       this.email = user.email
       this.atualizarTimeLine()
+      this.carregarListaSeguidores()
     })
+
+    
   }
 
   public atualizarTimeLine(): void {
@@ -39,6 +43,14 @@ export class UsuariosComponent implements OnInit {
       })
   }
 
+  public carregarListaSeguidores(): void{
+    this.bd.consultaListaSeguidores(this.email)
+    .then((listaSeg: Array<any>) => {
+      this.listaRetornoBD = listaSeg
+      console.log('carregarListaSeguidores(): ', this.listaRetornoBD)
+    }) 
+  }
+
   public seguir(nomeUsuario: string, key: string ): void{
 
     let element = <HTMLInputElement> document.getElementById(nomeUsuario);  
@@ -47,9 +59,13 @@ export class UsuariosComponent implements OnInit {
     if(this.listaSeguindo.includes(key)){
       this.listaSeguindo.splice(this.listaSeguindo.indexOf(key), 1)
       console.log(this.listaSeguindo)
+      
     }else{
       this.listaSeguindo.push(key)
       console.log(this.listaSeguindo)
+      this.bd.inserirSeguidores(this.email, this.listaSeguindo)
+  
+        
     }
 
   }
