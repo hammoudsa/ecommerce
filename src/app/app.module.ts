@@ -26,6 +26,8 @@ import { ProcurarComponent } from './procurar/procurar.component';
 import { UsuariosComponent } from './procurar/usuarios/usuarios.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { InformacoesComponent } from './perfil/informacoes/informacoes.component';
+import { TermosComponent } from './acesso/termos/termos.component';
+import { PublicacoesUserComponent } from './perfil/publicacoes-user/publicacoes-user.component';
 
 
 @NgModule({
@@ -42,7 +44,9 @@ import { InformacoesComponent } from './perfil/informacoes/informacoes.component
     ProcurarComponent,
     UsuariosComponent,
     PerfilComponent,
-    InformacoesComponent
+    InformacoesComponent,
+    TermosComponent,
+    PublicacoesUserComponent
   ],
   imports: [
     BrowserModule,

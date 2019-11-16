@@ -16,6 +16,9 @@ export class Bd {
     public lista: Array<any>
     public listaPublicacoes: Array<any> = [];
     public emailUsuario: any
+    public listaKeys: Array<any>
+
+    public listMockada: Array<any>
 
 
     public publicar(publicacao: any): void {
@@ -83,11 +86,10 @@ export class Bd {
 
     public inserirSeguidores(email: any, listaSeguindo: Array<any>): void {
         this.emailUsuario = email
-        this.lista = ['dGVzdGUwMEBob3RtYWlsLmNvbQ==','ZGVlbm55cy5yYWZmYWVsQG91dGxvb2suY29t']    
+        this.listMockada = listaSeguindo    
         let userRef = firebase.database().ref(`usuario_detalhe/${btoa(this.emailUsuario)}`)
-        userRef.child('usuario').update({'listaSeguidores': this.lista})
+        userRef.child('usuario').update({'listaSeguidores': this.listMockada})
         console.log('cheguei no insere seguidores')
-  
  
     }
 
@@ -112,13 +114,20 @@ export class Bd {
                 }) 
                 resolve(listaUsuarios)  
                 this.listaTodosUsuarios = listaUsuarios
+                
+                this.listaKeys = []
+
+                for(let i=0; i<listaUsuarios.length; i++){
+                    this.listaKeys.push(listaUsuarios[i].key)
+                }
+                console.log('LISTA BY KEYS', this.listaKeys) 
                            
             })  
                           
         })
     }
 
-    public consultaUsuarios2(): Promise<any> {
+  /*   public consultaUsuarios2(): Promise<any> {
 
         
         return new Promise((resolve, reject)=>{
@@ -142,15 +151,12 @@ export class Bd {
             })  
                           
         })
-    }
+    } */
 
 
     public consultaPublicacoes(): Promise<any> {
         
-        console.log('ttteste', this.listaSeguindo)
-        console.log('ttteste', this.listaTodosUsuarios)  
-        this.lista = this.listaSeguindo //fazer o array pegar o key da listaTodosUsuarios
-        //-- teste por enquanto com listaSeguindo -> mudar para listaTodosUsuarios
+        this.lista = this.listaKeys //Array com os keys da listaTodosUsuarios
         this.listaPublicacoes = []
 
         return new Promise((resolve, reject)=>{
@@ -160,21 +166,16 @@ export class Bd {
                     firebase.database().ref(`publicacoes/${this.listaSeguindo[i]}`)
                     .orderByKey()
                     .once('value')
-                    .then((snapshot: any) => {
-                        
+                    .then((snapshot: any) => {                       
                         snapshot.forEach((childSnapshot: any) => {
-                            
                             let publicacao = childSnapshot.val()
                             publicacao.key = childSnapshot.key
-        
                             this.listaPublicacoes.push(publicacao)
-        
                         })                
-         
                         return this.listaPublicacoes.reverse()  
                     })
+
                      .then((listaPublicacoes: any) => {
-        
                         listaPublicacoes.forEach((publicacao) => {
                             //consulta da url da imagem
                             firebase.storage().ref()
@@ -193,7 +194,6 @@ export class Bd {
                         })
                         resolve(listaPublicacoes)
                      }) 
-                     console.log('includes')
                 }
 
 
@@ -245,49 +245,50 @@ export class Bd {
         })  */
     }
 
-    public consultaPublicacoes2(): Promise<any> {
-
+    public consultaPublicacoesUser(): Promise<any>{
+      
         return new Promise((resolve, reject)=>{
           
-                    firebase.database().ref(`publicacoes/dGVzdGUwMEBob3RtYWlsLmNvbQ==`)
-                    .orderByKey()
-                    .once('value')
-                    .then((snapshot: any) => {
+            firebase.database().ref(`publicacoes/${btoa(this.emailUsuario)}`)
+            .orderByKey()
+            .once('value')
+            .then((snapshot: any) => {
+                
+                let listaPublicacoes: Array<any> = [];
+
+                snapshot.forEach((childSnapshot: any) => {
+                    
+                    let publicacao = childSnapshot.val()
+                    publicacao.key = childSnapshot.key
+
+                    listaPublicacoes.push(publicacao)
+
+                })                
+    
+                return listaPublicacoes.reverse()  
+            })
+                .then((listaPublicacoes: any) => {
+
+                listaPublicacoes.forEach((publicacao) => {
+                    //consulta da url da imagem
+                    firebase.storage().ref()
+                    .child(`imagens/${publicacao.key}`)
+                    .getDownloadURL()
+                    .then((url: string) => {
+
+                        publicacao.url_imagem = url
                         
-                        let listaPublicacoes: Array<any> = [];
-        
-                        snapshot.forEach((childSnapshot: any) => {
-                            
-                            let publicacao = childSnapshot.val()
-                            publicacao.key = childSnapshot.key
-        
-                            listaPublicacoes.push(publicacao)
-        
-                        })                
-         
-                        return listaPublicacoes.reverse()  
-                    })
-                     .then((listaPublicacoes: any) => {
-        
-                        listaPublicacoes.forEach((publicacao) => {
-                            //consulta da url da imagem
-                            firebase.storage().ref()
-                            .child(`imagens/${publicacao.key}`)
-                            .getDownloadURL()
-                            .then((url: string) => {
-        
-                                publicacao.url_imagem = url
-                                //consulta nome do usuario da publicação            ///verificar erro [i]
-                                firebase.database().ref(`usuario_detalhe/${btoa(this.lista[0].usuario.email)}`)
-                                    .once('value')
-                                    .then((snapshot: any) => {
-                                        publicacao.nome_usuario = snapshot.val().usuario.nome_usuario
-                                    })
-                            }) 
-                        })
-                        resolve(listaPublicacoes)
-                     })
+                        firebase.database().ref(`usuario_detalhe/${btoa(this.emailUsuario)}`)
+                            .once('value')
+                            .then((snapshot: any) => {
+                                publicacao.nome_usuario = snapshot.val().usuario.nome_usuario
+                            })
+                    }) 
+                })
+                resolve(listaPublicacoes)
+                })
         }) 
+    
     }
 
 

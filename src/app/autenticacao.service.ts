@@ -12,7 +12,6 @@ export class Autenticacao {
 
     public token_id: string
     public errormsg: string
-    //public logincomponent: LoginComponent
     public erro: string
     
 
@@ -58,19 +57,14 @@ export class Autenticacao {
             })
         })
         .catch((error: Error) => 
-            //erro = error.message;
-            //this.logincomponent.tratarErro()
-            //console.log(error)
-            this.chamarTratativa(error)
+            this.tratativa(error)
         )
         
     }
 
-    public chamarTratativa(error: Error): void {
+    public tratativa(error: Error): void {
         this.erro = String(error.message);
-        //console.log(this.erro)
-
-
+  
         if(this.erro == 'The email address is badly formatted.')
         {
             alert('Formato de email inválido!')
@@ -87,7 +81,7 @@ export class Autenticacao {
         {
             alert('Muitas tentativas sem sucesso, por favor tente novamente mais tarde!')
         }
-        //this.logincomponent.tratarErro()
+        
     }
 
     public autenticado(): boolean {

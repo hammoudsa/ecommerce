@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+
 @Component({
   selector: 'app-acesso',
   templateUrl: './acesso.component.html',
@@ -28,6 +29,7 @@ export class AcessoComponent implements OnInit {
       
 
   }
+
 
 
 }

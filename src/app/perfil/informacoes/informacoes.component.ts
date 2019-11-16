@@ -43,7 +43,6 @@ export class InformacoesComponent implements OnInit {
           if(this.usuarios[i].usuario.email == this.email){
             this.thisUserName = this.usuarios[i].usuario.nome_completo
             this.thisUser = this.usuarios[i].usuario.nome_usuario
-            //console.log(this.usuarios[i].key)
           }
         }
       })

@@ -1,7 +1,9 @@
+import { Router } from '@angular/router';
 import { Autenticacao } from './../../autenticacao.service';
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms'
 import { Usuario } from './../usuario.model';
+
  
 
 @Component({
@@ -22,7 +24,8 @@ export class CadastroComponent implements OnInit {
   })
 
   constructor( 
-    private autenticacao: Autenticacao
+    private autenticacao: Autenticacao,
+    private router: Router
   ){}
 
   ngOnInit() {
@@ -50,6 +53,10 @@ export class CadastroComponent implements OnInit {
       .then(() => this.exibirPainelLogin());
       window.alert('Cadastrado realizado com sucesso!');
     }
+  }
+
+  public termosDeUso(): void {
+    this.router.navigate(['/termos'])  
   }
 
 }

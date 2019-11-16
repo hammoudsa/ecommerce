@@ -47,7 +47,7 @@ export class PublicacoesComponent implements OnInit {
     this.bd.consultaPublicacoes()
       .then((listaPublicacoes: any)=>{
         this.publicacoes = listaPublicacoes
-        
+        console.log('LISTA PUBLICAÇÕES',this.publicacoes)
       })    
   }
 }

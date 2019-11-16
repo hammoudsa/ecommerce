@@ -24,7 +24,10 @@ export class UsuariosComponent implements OnInit {
       this.email = user.email
       this.atualizarTimeLine()
       this.carregarListaSeguidores()
+      this.listar()
+      
     })
+  
 
     
   }
@@ -46,9 +49,17 @@ export class UsuariosComponent implements OnInit {
   public carregarListaSeguidores(): void{
     this.bd.consultaListaSeguidores(this.email)
     .then((listaSeg: Array<any>) => {
-      this.listaRetornoBD = listaSeg
-      console.log('carregarListaSeguidores(): ', this.listaRetornoBD)
+      this.listaSeguindo = listaSeg
+      console.log('carregarListaSeguidores(): ', this.listaSeguindo)
     }) 
+  }
+
+  public listar(): void{
+    let elements: Array<any>
+    for(let i=0; i<document.all.length; i++){
+      elements.push(document.getElementById[i])
+    }
+    console.log('aaaa', elements )
   }
 
   public seguir(nomeUsuario: string, key: string ): void{
@@ -64,8 +75,7 @@ export class UsuariosComponent implements OnInit {
       this.listaSeguindo.push(key)
       console.log(this.listaSeguindo)
       this.bd.inserirSeguidores(this.email, this.listaSeguindo)
-  
-        
+          
     }
 
   }
