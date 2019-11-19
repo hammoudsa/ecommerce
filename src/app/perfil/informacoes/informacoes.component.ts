@@ -46,7 +46,6 @@ export class InformacoesComponent implements OnInit {
           }
         }
       })
-     
 
       this.bd.consultaArtistas()
       .then((listaArtistas: any) =>{
@@ -54,9 +53,5 @@ export class InformacoesComponent implements OnInit {
         this.artista = listaArtistas
       })
   }
-
-
-
-  
 
 }

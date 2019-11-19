@@ -20,6 +20,7 @@ export class PublicacoesComponent implements OnInit {
     firebase.auth().onAuthStateChanged((user) => {
       this.email = user.email
       this.atualizarLista()
+      this.bd.consultaListaSeguidores(this.email)
       this.atualizarTimeLine()
     })
   }
@@ -32,7 +33,6 @@ export class PublicacoesComponent implements OnInit {
         this.usuarios = listaUsuarios
     
       })
-     
 
       this.bd.consultaArtistas()
       .then((listaArtistas: any) =>{
@@ -42,12 +42,15 @@ export class PublicacoesComponent implements OnInit {
   }
 
   public atualizarTimeLine(): void {
-
-    this.bd.consultaListaSeguidores(this.email)
     this.bd.consultaPublicacoes()
       .then((listaPublicacoes: any)=>{
         this.publicacoes = listaPublicacoes
         console.log('LISTA PUBLICAÇÕES',this.publicacoes)
       })    
+/*    this.bd.consultaPublicacoesUser(this.email)
+        .then((listaPublicacoes: any)=>{
+          this.publicacoes = listaPublicacoes
+          console.log('LISTA PUBLICAÇÕES',this.publicacoes)
+        })   */
   }
 }

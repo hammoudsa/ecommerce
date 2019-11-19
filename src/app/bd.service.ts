@@ -5,6 +5,7 @@ import * as firebase from 'firebase'
 import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes'
 import { reject, resolve } from 'q';
 
+
 @Injectable()
 export class Bd {
 
@@ -17,6 +18,8 @@ export class Bd {
     public listaPublicacoes: Array<any> = [];
     public emailUsuario: any
     public listaKeys: Array<any>
+
+    public listaNomes: Array<any>
 
     public listMockada: Array<any>
 
@@ -56,7 +59,7 @@ export class Bd {
         
     }
 
-    //funcionando
+    //consulta da listas de seguidores atreladas ao usuario logado
     public consultaListaSeguidores(email: any): Promise<any> {
         this.emailUsuario = email
 
@@ -83,16 +86,15 @@ export class Bd {
         })
     }
 
-
+    //insere a lista de seguidores no firebase
     public inserirSeguidores(email: any, listaSeguindo: Array<any>): void {
         this.emailUsuario = email
         this.listMockada = listaSeguindo    
         let userRef = firebase.database().ref(`usuario_detalhe/${btoa(this.emailUsuario)}`)
         userRef.child('usuario').update({'listaSeguidores': this.listMockada})
-        console.log('cheguei no insere seguidores')
- 
     }
 
+    //consulta de todos os usuarios cadastrados na aplicação
     public consultaUsuarios(): Promise<any> {
 
         return new Promise((resolve, reject)=>{
@@ -153,7 +155,7 @@ export class Bd {
         })
     } */
 
-
+    //consulta das publicações de acordo com a lista de seguidores retornada do  firebase
     public consultaPublicacoes(): Promise<any> {
         
         this.lista = this.listaKeys //Array com os keys da listaTodosUsuarios
@@ -170,6 +172,8 @@ export class Bd {
                         snapshot.forEach((childSnapshot: any) => {
                             let publicacao = childSnapshot.val()
                             publicacao.key = childSnapshot.key
+                             //insere nome do usuario da publicação
+                            publicacao.nome_usuario = atob(this.listaSeguindo[i])
                             this.listaPublicacoes.push(publicacao)
                         })                
                         return this.listaPublicacoes.reverse()  
@@ -188,14 +192,15 @@ export class Bd {
                                 firebase.database().ref(`usuario_detalhe/${this.listaSeguindo[i]}`)
                                     .once('value')
                                     .then((snapshot: any) => {
-                                        publicacao.nome_usuario = snapshot.val().usuario.nome_usuario
+                                        //publicacao.nome_usuario = atob(this.listaSeguindo[i])//snapshot.val().usuario.nome_usuario
+                                        //this.listaNomes.push(atob(this.listaSeguindo[i]))
+                                        console.log(publicacao)
                                     })
                             }) 
                         })
                         resolve(listaPublicacoes)
                      }) 
                 }
-
 
             }
         }) 
@@ -245,10 +250,10 @@ export class Bd {
         })  */
     }
 
-    public consultaPublicacoesUser(): Promise<any>{
-      
+    public consultaPublicacoesUser(email: any): Promise<any>{
+        this.emailUsuario = email
         return new Promise((resolve, reject)=>{
-          
+
             firebase.database().ref(`publicacoes/${btoa(this.emailUsuario)}`)
             .orderByKey()
             .once('value')
@@ -264,10 +269,10 @@ export class Bd {
                     listaPublicacoes.push(publicacao)
 
                 })                
-    
+ 
                 return listaPublicacoes.reverse()  
             })
-                .then((listaPublicacoes: any) => {
+            .then((listaPublicacoes: any) => {
 
                 listaPublicacoes.forEach((publicacao) => {
                     //consulta da url da imagem
@@ -277,16 +282,17 @@ export class Bd {
                     .then((url: string) => {
 
                         publicacao.url_imagem = url
-                        
+                        //consulta nome do usuario da publicação
                         firebase.database().ref(`usuario_detalhe/${btoa(this.emailUsuario)}`)
                             .once('value')
                             .then((snapshot: any) => {
                                 publicacao.nome_usuario = snapshot.val().usuario.nome_usuario
+
                             })
                     }) 
                 })
                 resolve(listaPublicacoes)
-                })
+            })
         }) 
     
     }

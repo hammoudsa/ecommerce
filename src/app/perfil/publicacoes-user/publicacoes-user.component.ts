@@ -25,7 +25,7 @@ export class PublicacoesUserComponent implements OnInit {
 
   public atualizarTimeLine(): void {
 
-    this.bd.consultaPublicacoesUser()
+    this.bd.consultaPublicacoesUser(this.email)
       .then((listaPublicacoes: any)=>{
         this.publicacoes = listaPublicacoes
       })    

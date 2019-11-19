@@ -31,12 +31,12 @@ export class Autenticacao {
         })
     }
 
-    public cadastrarArtista(artista: Artista): Promise<any> {      
-        return firebase.auth().createUserWithEmailAndPassword(artista.email, artista.senha)
+    public cadastrarArtista(usuario: Usuario): Promise<any> {      
+        return firebase.auth().createUserWithEmailAndPassword(usuario.email, usuario.senha)
         .then((resposta: any) => {
-            delete artista.senha
-            firebase.database().ref(`artista_detalhe/${btoa(artista.email)}`)
-                .set({ artista })
+            delete usuario.senha
+            firebase.database().ref(`artista_detalhe/${btoa(usuario.email)}`)
+                .set({ usuario })
 
         })
         .catch((error: Error) => {

@@ -3,8 +3,6 @@ import { Router } from '@angular/router';
 import { Autenticacao } from './../autenticacao.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
-
-
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.component.html',

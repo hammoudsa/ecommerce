@@ -37,8 +37,7 @@ export class IncluirPublicacaoComponent implements OnInit {
     firebase.auth().onAuthStateChanged((user) => {
       this.email = user.email
     })
-  }
-  
+  } 
 
   public publicar(): void {
     let descricaoVerificada
@@ -58,8 +57,6 @@ export class IncluirPublicacaoComponent implements OnInit {
       let continua = new Subject()
       continua.next(true)
 
-      
-
       acompanhamentoUpload
         .takeUntil(continua)
         .subscribe(() => {
@@ -75,10 +72,7 @@ export class IncluirPublicacaoComponent implements OnInit {
           }
         })
 
-
-
   }
-
 
   public resetForm(): void {
     this.formulario = new FormGroup({
@@ -92,5 +86,4 @@ export class IncluirPublicacaoComponent implements OnInit {
     this.imagem = (<HTMLInputElement>event.target).files
   }
    
-  
 }

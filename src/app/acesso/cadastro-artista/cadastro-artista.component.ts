@@ -1,4 +1,4 @@
-import { Artista } from './../artista.model';
+import { Usuario } from './../usuario.model';
 import { Autenticacao } from './../../autenticacao.service';
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms'
@@ -34,22 +34,23 @@ export class CadastroArtistaComponent implements OnInit {
 
   public cadastrarArtista(): void {
 
-    let artista: Artista = new Artista(
+    let usuario: Usuario = new Usuario(
       this.formulario.value.email,
-      this.formulario.value.nome_artistico,
+      this.formulario.value.nome_completo,
       this.formulario.value.nome_usuario,
       this.formulario.value.senha,
-      this.formulario.value.genero
-
+      '',
+      true,
+      ''
     )
+
     if(this.formulario.value.senha != this.formulario.value.confirmar_senha){
       window.alert('As senhas devem ser iguais!');
     }else{
-      this.autenticacao.cadastrarArtista(artista)
+      this.autenticacao.cadastrarArtista(usuario)
       .then(() => this.exibirPainelLogin());
       window.alert('Cadastrado realizado com sucesso!');
     }
-
 
   }
 
