@@ -24,6 +24,10 @@
   margin-top: -30px;
 }
 
+.seguindo{
+  background-color: #3399FF;
+}
+
 @-webkit-keyframes follow-animation {
     from {background: white; color: #3399FF; width: 85px; left: 50px;}
     to {background: #2EB82E; border-color: #2EB82E; color: #ffffff; width: 120px; left: 35px;}

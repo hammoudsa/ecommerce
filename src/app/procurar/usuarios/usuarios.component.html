@@ -23,12 +23,25 @@
         <img class="card-img" src="https://cdn.pixabay.com/photo/2012/04/26/19/43/profile-42914_960_720.png" />
         <p [id]="usuario.nome_usuario" class="card-text artist"><strong>{{ usuario.nome_usuario }} </strong></p>
         <p class="genre">{{ usuario.genero }}</p>
+
         <input class="botao" 
           [id]="usuario.nome_usuario" 
           type="checkbox" 
+          *ngIf="listaSeguindo.includes(usuario.key); else elseBlock"
+          checked
           (click)="seguir(usuario.nome_usuario, usuario.key)" 
-        />	
+        />
+
+        <ng-template #elseBlock>
+          <input class="botao" 
+          [id]="usuario.nome_usuario" 
+          type="checkbox" 
+          (click)="seguir(usuario.nome_usuario, usuario.key)" 
+        />
+        </ng-template>
       </div> 
+
+      
 
     </div>
   </div>

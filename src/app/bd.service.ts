@@ -129,32 +129,6 @@ export class Bd {
         })
     }
 
-  /*   public consultaUsuarios2(): Promise<any> {
-
-        
-        return new Promise((resolve, reject)=>{
-
-            firebase.database().ref(`usuario_detalhe`)
-            .once('value')
-            .then((snapshot: any) => {
-
-                let listaUsuarios: Array<any> = [];
-
-                snapshot.forEach((childSnapshot: any) => {
-                    
-                    let usuario = childSnapshot.val()
-                    usuario.key = childSnapshot.key
-                    usuario.nome_usuario = childSnapshot.val().usuario.nome_usuario
-
-                    listaUsuarios.push(usuario)
-
-                }) 
-                resolve(listaUsuarios)        
-            })  
-                          
-        })
-    } */
-
     //consulta das publicações de acordo com a lista de seguidores retornada do  firebase
     public consultaPublicacoes(): Promise<any> {
         
