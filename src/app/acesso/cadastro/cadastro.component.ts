@@ -43,7 +43,7 @@ export class CadastroComponent implements OnInit {
       this.formulario.value.nome_completo,
       this.formulario.value.nome_usuario,
       this.formulario.value.senha,
-      '',
+      btoa(this.formulario.value.email),
       false,
       ''
     )

@@ -174,7 +174,13 @@ export class Bd {
                             publicacao.key = childSnapshot.key
                              //insere nome do usuario da publicação
                             publicacao.nome_usuario = atob(this.listaSeguindo[i])
-                            this.listaPublicacoes.push(publicacao)
+                            for(let i=0; i<this.listaTodosUsuarios.length; i++){
+                                if(publicacao.nome_usuario == this.listaTodosUsuarios[i].usuario.email){
+                                    publicacao.nome_usuario = this.listaTodosUsuarios[i].nome_usuario
+                                    this.listaPublicacoes.push(publicacao)
+                                }
+                            }    
+
                         })                
                         return this.listaPublicacoes.reverse()  
                     })
@@ -186,16 +192,7 @@ export class Bd {
                             .child(`imagens/${publicacao.key}`)
                             .getDownloadURL()
                             .then((url: string) => {
-        
-                                publicacao.url_imagem = url
-                                //consulta nome do usuario da publicação
-                                firebase.database().ref(`usuario_detalhe/${this.listaSeguindo[i]}`)
-                                    .once('value')
-                                    .then((snapshot: any) => {
-                                        //publicacao.nome_usuario = atob(this.listaSeguindo[i])//snapshot.val().usuario.nome_usuario
-                                        //this.listaNomes.push(atob(this.listaSeguindo[i]))
-                                        console.log(publicacao)
-                                    })
+                                publicacao.url_imagem = url    
                             }) 
                         })
                         resolve(listaPublicacoes)
