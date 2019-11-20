@@ -21,7 +21,6 @@ export class PublicacoesComponent implements OnInit {
       this.email = user.email
       this.atualizarLista()
       this.bd.consultaListaSeguidores(this.email)
-      this.atualizarTimeLine()
     })
   }
 
@@ -31,7 +30,7 @@ export class PublicacoesComponent implements OnInit {
       .then((listaUsuarios: any) =>{
         console.log('usuario component === ', listaUsuarios)
         this.usuarios = listaUsuarios
-    
+        this.atualizarTimeLine()
       })
 
       this.bd.consultaArtistas()
@@ -42,6 +41,7 @@ export class PublicacoesComponent implements OnInit {
   }
 
   public atualizarTimeLine(): void {
+    
     this.bd.consultaPublicacoes()
       .then((listaPublicacoes: any)=>{
         this.publicacoes = listaPublicacoes

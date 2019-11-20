@@ -131,7 +131,7 @@ export class Bd {
 
     //consulta das publicações de acordo com a lista de seguidores retornada do  firebase
     public consultaPublicacoes(): Promise<any> {
-        
+        this.consultaUsuarios()
         this.lista = this.listaKeys //Array com os keys da listaTodosUsuarios
         this.listaPublicacoes = []
 
