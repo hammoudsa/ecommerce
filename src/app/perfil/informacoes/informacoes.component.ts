@@ -22,6 +22,10 @@ export class InformacoesComponent implements OnInit {
 
   public thisUserName: String
   public thisUser: String
+  public isArtist: boolean
+  public genero: string
+
+  public imagemPerfil: any
 
   constructor(private bd: Bd) { }
 
@@ -29,6 +33,7 @@ export class InformacoesComponent implements OnInit {
     firebase.auth().onAuthStateChanged((user) => {
       this.email = user.email
       this.atualizarTimeLine()
+      
     })
   }
 
@@ -43,16 +48,23 @@ export class InformacoesComponent implements OnInit {
           if(this.usuarios[i].usuario.email == this.email){
             this.thisUserName = this.usuarios[i].usuario.nome_completo
             this.thisUser = this.usuarios[i].usuario.nome_usuario
+            this.isArtist = this.usuarios[i].usuario.isArtist
+            this.genero = this.usuarios[i].usuario.genero
+            
             console.log('nome: ', this.thisUserName)
           }
         }
       })
 
-      this.bd.consultaArtistas()
-      .then((listaArtistas: any) =>{
-        console.log('artista component === ', listaArtistas)
-        this.artista = listaArtistas
+      this.bd.consultaImagemPerfil(this.email)
+      .then((urlImagem: any) => {
+        this.imagemPerfil = urlImagem
+        console.log('URL INFO: ', urlImagem)
       })
+
   }
 
+  public editar(): void{
+    console.log('abrir modal')
+  }  
 }

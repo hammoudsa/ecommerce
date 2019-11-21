@@ -16,11 +16,13 @@
 }
 
 
-.card-img {
+.card-img2 {
     margin-top: 3%;
     width: 20%;
     border-radius: 100%;
+    background-size: contain;
 }
+
 
 .nomeUsuario{
     margin-left: 22%;

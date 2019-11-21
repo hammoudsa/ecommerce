@@ -32,26 +32,26 @@ export class CadastroArtistaComponent implements OnInit {
     this.exibirPainel.emit('login')
   }
 
-  public cadastrarArtista(): void {
+  public cadastrarUsuario(): void {
 
+    //cadastro usuario Artista
     let usuario: Usuario = new Usuario(
       this.formulario.value.email,
-      this.formulario.value.nome_completo,
+      this.formulario.value.nome_artistico,
       this.formulario.value.nome_usuario,
       this.formulario.value.senha,
-      '',
+      btoa(this.formulario.value.email),
       true,
-      ''
+      this.formulario.value.genero
     )
 
     if(this.formulario.value.senha != this.formulario.value.confirmar_senha){
       window.alert('As senhas devem ser iguais!');
     }else{
-      this.autenticacao.cadastrarArtista(usuario)
+      this.autenticacao.cadastrarUsuario(usuario)
       .then(() => this.exibirPainelLogin());
       window.alert('Cadastrado realizado com sucesso!');
     }
-
   }
 
 }

@@ -31,18 +31,6 @@ export class Autenticacao {
         })
     }
 
-    public cadastrarArtista(usuario: Usuario): Promise<any> {      
-        return firebase.auth().createUserWithEmailAndPassword(usuario.email, usuario.senha)
-        .then((resposta: any) => {
-            delete usuario.senha
-            firebase.database().ref(`artista_detalhe/${btoa(usuario.email)}`)
-                .set({ usuario })
-
-        })
-        .catch((error: Error) => {
-            console.log(error)
-        })
-    }
 
     public autenticar(email: string, senha: string): void {
         

@@ -25,6 +25,18 @@
     margin-right: 0px;
 }
 
+.edit {
+    background-image: url('/assets/editicon.png');
+    background-size: 28px;
+    opacity: 60%;
+    background-repeat: no-repeat;
+    width: 32px;
+    height: 32px;
+    float: left;
+    margin-top: 2px;
+    margin-left: 5px;
+}
+
 
 .search {
     background-image: url('/assets/search.png');

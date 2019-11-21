@@ -22,6 +22,7 @@ export class Bd {
     public listaNomes: Array<any>
 
     public listMockada: Array<any>
+    public urlImagem: string
 
 
     public publicar(publicacao: any): void {
@@ -57,6 +58,54 @@ export class Bd {
          
 
         
+    }
+
+    public alterarPerfil(publicacao: any): void {
+             
+        firebase.database().ref(`perfil/${btoa(publicacao.email)}`)
+        .push( {})
+        .then((resposta: any) => {
+
+            firebase.storage().ref()
+            .child(`perfil/${publicacao.email}`)
+            .put(publicacao.imagem)
+            .on(firebase.storage.TaskEvent.STATE_CHANGED,
+                //acompanhar o progresso do upload
+                (snapshot: any) => {
+
+                    this.progresso.status = 'em andamento'
+                    this.progresso.estado = snapshot
+
+                },
+                (error) => { 
+                    this.progresso.status = 'erro'
+              
+                },
+                () => {
+                    //finalização do progresso
+                    this.progresso.status = 'concluido'
+
+                }
+            ) 
+        })  
+    }
+
+    public consultaImagemPerfil(email: string): Promise<any> {
+          
+        return new Promise((resolve, reject)=>{
+            let urltest: Array<any>
+            urltest = []
+            firebase.storage().ref()
+            .child(`perfil/${email}`)
+            .getDownloadURL()
+            .then((url: string) => {
+                urltest.push(url) 
+                 
+            }) 
+            resolve(urltest)
+           
+        }) 
+                  
     }
 
     //consulta da listas de seguidores atreladas ao usuario logado
