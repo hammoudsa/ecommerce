@@ -3,7 +3,7 @@
   <div class="modal-dialog" role="document">
 
     <div class="modal-content" *ngIf="progressoPublicacao === 'pendente'">
-      <form [formGroup]="formulario" (ngSubmit)="publicar()">
+      <form [formGroup]="formulario" (ngSubmit)="publicarEvento()">
         <div class="modal-header">
 
 
@@ -19,7 +19,8 @@
           <input type="text" placeholder="Titulo do evento" class="form-control" formControlName="titulo">
           <input type="text" placeholder="Descrição" class="form-control" formControlName="descricao">
           <input type="text" placeholder="Data e hora" class="form-control" formControlName="data">
-          <input type="text" placeholder="Link de compra do ingresso" class="form-control" formControlName="compra">
+          <input type="text" placeholder="Local do evento" class="form-control" formControlName="local">
+          <input type="text" placeholder="Link de compra do ingresso" class="form-control" formControlName="compra"> 
 
         </div>
         <div class="modal-footer">

@@ -8,13 +8,30 @@
       <img class="card-img" [src]="publicacao.url_imagem || ''" />
       
       <div class="card-body">
+        <b><p class="titulo" *ngIf="publicacao.isArtist==true && publicacao.titulo != null">
+           Evento: {{ publicacao.titulo }}
+        </p></b>
+
+        <hr *ngIf="publicacao.isArtist==true && publicacao.titulo != null"/>
         <p class="card-text">
-         {{ publicacao.descricao }}
+          {{ publicacao.descricao }}
         </p>
+        <hr  *ngIf="publicacao.isArtist==true && publicacao.data != null"/>
+        <p class="card-text" *ngIf="publicacao.isArtist==true && publicacao.data != null">
+          Data: {{ publicacao.data }}
+          </p>
+        <hr  *ngIf="publicacao.isArtist==true && publicacao.local != null"/>
+        <p class="card-text" *ngIf="publicacao.isArtist==true && publicacao.local != null">
+          Local: {{ publicacao.local }}
+         </p>
 
-        <hr />
-
-      </div>
+      <hr *ngIf="publicacao.isArtist==true && publicacao.compra != null"/>
+      <p class="card-text" *ngIf="publicacao.isArtist==true  && publicacao.compra != null">
+        <!-------------------------------------------------------------------------------->
+          Link de compra: <a [href]="publicacao.compra">{{publicacao.compra}}</a>
+        </p>
+    <hr *ngIf="publicacao.isArtist==true && publicacao.titulo != null" />
+ 
     </div>
   </div>
 </div>

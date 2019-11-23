@@ -17,10 +17,11 @@ export class IncluirEventosComponent implements OnInit {
 
   @ViewChild('eventModal') eventModal: ElementRef;
   public formulario: FormGroup = new FormGroup({
-    'titulo' : new FormControl(null),
+    'titulo' : new FormControl(null), 
     'descricao': new FormControl(null),
     'data' : new FormControl(null),
-    'compra' : new FormControl(null)
+    'local': new FormControl(null),
+    'compra' : new FormControl(null) 
 
   })
 
@@ -37,46 +38,65 @@ export class IncluirEventosComponent implements OnInit {
     private progresso: Progresso) { }
 
   ngOnInit() {
+    firebase.auth().onAuthStateChanged((user) => {
+      this.email = user.email
+    })
   }
 
-  public publicar(): void {
+  public publicarEvento(): void {
     let descricaoVerificada
     if(this.formulario.value.descricao == null){
       descricaoVerificada = " "
     }else{
       descricaoVerificada = this.formulario.value.descricao
     }
-    this.bd.publicar({    
-      email: this.email,
-      descricao: descricaoVerificada,
-      imagem: this.imagem[0]
 
-      }) 
-      let acompanhamentoUpload = Observable.interval(1500)
+    if(this.formulario.value.data == null || this.formulario.value.compra == null || this.formulario.value.titulo == null  || this.formulario.value.local == null){
+       alert('Por favor, preencha todos os campos!')
+    }else{ 
+      this.bd.publicarEvento({    
+        email: this.email,
+        titulo: this.formulario.value.titulo,  
+        descricao: descricaoVerificada,
+        data: this.formulario.value.data,
+        local: this.formulario.value.local,
+        compra: this.formulario.value.compra, 
+        imagem: this.imagem[0]
+  
+        }) 
+        let acompanhamentoUpload = Observable.interval(1500)
+  
+        let continua = new Subject()
+        continua.next(true)
+  
+        acompanhamentoUpload
+          .takeUntil(continua)
+          .subscribe(() => {
+            console.log(this.progresso.status)
+            console.log(this.progresso.estado)
+            this.progressoPublicacao = 'andamento'
+            this.porcentagemUpload = Math.round((this.progresso.estado.bytesTransferred / this.progresso.estado.totalBytes) * 100)
+            if (this.progresso.status === 'concluido'){
+              continua.next(false)
+              this.progressoPublicacao = 'concluido';
+              this.atualizarTimeline.emit();
+              this.resetForm();
+            }
+          })
 
-      let continua = new Subject()
-      continua.next(true)
+     } 
 
-      acompanhamentoUpload
-        .takeUntil(continua)
-        .subscribe(() => {
-          console.log(this.progresso.status)
-          console.log(this.progresso.estado)
-          this.progressoPublicacao = 'andamento'
-          this.porcentagemUpload = Math.round((this.progresso.estado.bytesTransferred / this.progresso.estado.totalBytes) * 100)
-          if (this.progresso.status === 'concluido'){
-            continua.next(false)
-            this.progressoPublicacao = 'concluido';
-            this.atualizarTimeline.emit();
-            this.resetForm();
-          }
-        })
+    
 
   }
 
   public resetForm(): void {
     this.formulario = new FormGroup({
-      'descricao': new FormControl(null)
+    'titulo' : new FormControl(null), 
+    'descricao': new FormControl(null),
+    'data' : new FormControl(null),
+    'local': new FormControl(null),
+    'compra' : new FormControl(null) 
     })
     this.progressoPublicacao = "pendente";
   }

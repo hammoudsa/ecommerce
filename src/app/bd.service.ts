@@ -25,6 +25,7 @@ export class Bd {
     public urlImagem: string
 
 
+
     public publicar(publicacao: any): void {
              
         firebase.database().ref(`publicacoes/${btoa(publicacao.email)}`)
@@ -54,11 +55,45 @@ export class Bd {
                 }
             ) 
         })
-
-         
-
-        
+      
     }
+
+    public publicarEvento (publicacao: any): void {
+             
+        firebase.database().ref(`publicacoes/${btoa(publicacao.email)}`)
+        .push( {titulo: publicacao.titulo, 
+                descricao: publicacao.descricao,
+                data: publicacao.data,
+                local: publicacao.local,
+                compra: publicacao.compra  })
+        .then((resposta: any) => {
+            let nomeImagem = resposta.key
+
+            firebase.storage().ref()
+            .child(`imagens/${nomeImagem}`)
+            .put(publicacao.imagem)
+            .on(firebase.storage.TaskEvent.STATE_CHANGED,
+                //acompanhar o progresso do upload
+                (snapshot: any) => {
+
+                    this.progresso.status = 'em andamento'
+                    this.progresso.estado = snapshot
+
+                },
+                (error) => { 
+                    this.progresso.status = 'erro'
+              
+                },
+                () => {
+                    //finalização do progresso
+                    this.progresso.status = 'concluido'
+
+                }
+            ) 
+        })
+      
+    }
+
 
     public alterarPerfil(publicacao: any): void {
              
@@ -195,11 +230,16 @@ export class Bd {
                         snapshot.forEach((childSnapshot: any) => {
                             let publicacao = childSnapshot.val()
                             publicacao.key = childSnapshot.key
+                        
                              //insere nome do usuario da publicação
                             publicacao.nome_usuario = atob(this.listaSeguindo[i])
                             for(let i=0; i<this.listaTodosUsuarios.length; i++){
                                 if(publicacao.nome_usuario == this.listaTodosUsuarios[i].usuario.email){
                                     publicacao.nome_usuario = this.listaTodosUsuarios[i].nome_usuario
+                                    publicacao.isArtist = this.listaTodosUsuarios[i].usuario.isArtist
+                                    if(this.listaTodosUsuarios[i].isArtist == true){
+                                        console.log('é artista saporra')
+                                    }
                                     this.listaPublicacoes.push(publicacao)
                                 }
                             }    
