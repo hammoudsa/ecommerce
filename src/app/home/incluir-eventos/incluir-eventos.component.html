@@ -1,4 +1,4 @@
-<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
   <div class="modal-dialog" role="document">
 
@@ -8,11 +8,7 @@
 
 
           
-<!--           <h5 class="modal-title" id="exampleModalLabel" *ngIf="isArtist==true; else elseBlock">Criar Evento</h5>
-          <ng-template #elseBlock> -->
-              <h5 class="modal-title" id="exampleModalLabel">Publicar</h5>
-         
-
+          <h5 class="modal-title" id="exampleModalLabel">Criar Evento</h5>
 
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -20,13 +16,15 @@
         </div>
         <div class="modal-body">
           <input type="file" class="form-control" accept="image/*" (change)="preparaImagemUpload($event)" />
-
+          <input type="text" placeholder="Titulo do evento" class="form-control" formControlName="titulo">
           <input type="text" placeholder="Descrição" class="form-control" formControlName="descricao">
+          <input type="text" placeholder="Data e hora" class="form-control" formControlName="data">
+          <input type="text" placeholder="Link de compra do ingresso" class="form-control" formControlName="compra">
 
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelar">Cancelar</button>
-          <button type="submit" class="btn btn-primary">Publicar</button>
+          <button type="submit" class="btn btn-primary">Criar</button>
         </div>
       </form>
     </div>

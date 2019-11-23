@@ -5,6 +5,7 @@
     <div>
       <div class="search" (click)="procurar()"></div>
       <div class="add-post" data-toggle="modal" data-target="#uploadModal"></div>
+      <div class="add-event" data-toggle="modal" data-target="#eventModal" *ngIf="isArtist==true"></div>
       <!--<a class="sair" href="#" (click)="sair()" style="margin-left: 15px">Sair</a>-->
       <div class="perfil" (click)="meuPerfil()"></div>
       <!--<button type="button" class="btn btn-primary">Meu perfil</button>-->
@@ -16,5 +17,6 @@
 <div class="container">
   <app-publicacoes #publicacoes></app-publicacoes>
   <app-incluir-publicacao (atualizarTimeline)="atualizarTimeline()"></app-incluir-publicacao>   
+  <app-incluir-eventos (atualizarTimeline)="atualizarTimeline()"></app-incluir-eventos>   
 
 </div>

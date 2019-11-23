@@ -29,6 +29,7 @@ import { InformacoesComponent } from './perfil/informacoes/informacoes.component
 import { TermosComponent } from './acesso/termos/termos.component';
 import { PublicacoesUserComponent } from './perfil/publicacoes-user/publicacoes-user.component';
 import { EditarPerfilComponent } from './perfil/editar-perfil/editar-perfil.component';
+import { IncluirEventosComponent } from './home/incluir-eventos/incluir-eventos.component';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { EditarPerfilComponent } from './perfil/editar-perfil/editar-perfil.comp
     InformacoesComponent,
     TermosComponent,
     PublicacoesUserComponent,
-    EditarPerfilComponent
+    EditarPerfilComponent,
+    IncluirEventosComponent
   ],
   imports: [
     BrowserModule,

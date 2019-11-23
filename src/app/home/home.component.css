@@ -25,6 +25,16 @@
     margin-right: 0px;
 }
 
+.add-event {
+    background-image: url('/assets/eventicon.png');
+    background-size: 30px;
+    background-repeat: no-repeat;
+    width: 32px;
+    height: 32px;
+    float: left;
+    margin-left: 8px;
+    margin-top: 2px;
+}
 
 .search {
     background-image: url('/assets/search.png');

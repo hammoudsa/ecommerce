@@ -8,20 +8,21 @@ import 'rxjs/Rx'
 import { Observable } from 'rxjs/Observable'
 import { Subject } from 'rxjs/Rx'
 
-
 @Component({
-  selector: 'app-incluir-publicacao',
-  templateUrl: './incluir-publicacao.component.html',
-  styleUrls: ['./incluir-publicacao.component.css']
+  selector: 'app-incluir-eventos',
+  templateUrl: './incluir-eventos.component.html',
+  styleUrls: ['./incluir-eventos.component.css']
 })
-export class IncluirPublicacaoComponent implements OnInit {
+export class IncluirEventosComponent implements OnInit {
 
-  @ViewChild('uploadModal') uploadModal: ElementRef;
+  @ViewChild('eventModal') eventModal: ElementRef;
   public formulario: FormGroup = new FormGroup({
-    'descricao': new FormControl(null)
-  })
+    'titulo' : new FormControl(null),
+    'descricao': new FormControl(null),
+    'data' : new FormControl(null),
+    'compra' : new FormControl(null)
 
-  @Output() public atualizarTimeline: EventEmitter<any> = new EventEmitter<any>()
+  })
 
   public email: string
   private imagem: any
@@ -29,17 +30,14 @@ export class IncluirPublicacaoComponent implements OnInit {
   public porcentagemUpload: number
   public isArtist: boolean
 
-  constructor(
+  @Output() public atualizarTimeline: EventEmitter<any> = new EventEmitter<any>()
+
+  constructor( 
     private bd: Bd,
-    private progresso: Progresso
-  ) { }
+    private progresso: Progresso) { }
 
   ngOnInit() {
-    firebase.auth().onAuthStateChanged((user) => {
-      this.email = user.email
-      this.consultaUsuario()
-    })
-  } 
+  }
 
   public publicar(): void {
     let descricaoVerificada
@@ -88,20 +86,4 @@ export class IncluirPublicacaoComponent implements OnInit {
     this.imagem = (<HTMLInputElement>event.target).files
   }
 
-  public consultaUsuario(): void {
-    this.bd.consultaUsuarios()
-   .then((listaUsuarios: any) =>{
-     console.log(this.email)
-     for(let i=0; i<listaUsuarios.length; i++){
-       if(listaUsuarios[i].usuario.email == this.email){
-         this.isArtist = listaUsuarios[i].usuario.isArtist
-         
-       }
-      
-     }
-     console.log(' ', this.isArtist)
-   })
-  }
-  
-   
 }
