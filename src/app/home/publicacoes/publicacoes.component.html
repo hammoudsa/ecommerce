@@ -27,8 +27,7 @@
 
       <hr *ngIf="publicacao.isArtist==true && publicacao.compra != null"/>
       <p class="card-text" *ngIf="publicacao.isArtist==true  && publicacao.compra != null">
-        <!-------------------------------------------------------------------------------->
-          Link de compra: <a [href]="publicacao.compra">{{publicacao.compra}}</a>
+          <a [href]="publicacao.compra" target="_blank">Comprar ingresso</a>
         </p>
     <hr *ngIf="publicacao.isArtist==true && publicacao.titulo != null" />
  

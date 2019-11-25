@@ -386,6 +386,10 @@ export class Bd {
         })
     }
 
+    public deletarConta(): void{
+
+    }
+
 
 
 }

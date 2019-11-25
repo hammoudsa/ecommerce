@@ -1,28 +1,15 @@
-<div class="row" *ngFor="let artista of artistas">
-    <div class="col d-flex justify-content-center">
-      <div class="card">
-        <div class="card-body">
-          <img class="card-img" src="https://cdn.pixabay.com/photo/2012/04/26/19/43/profile-42914_960_720.png" />
-          <p [id]="artista.nome_usuario" class="card-text artist"><strong>{{ artista.nome_usuario }} </strong></p>
-          <p class="genre">{{ artista.genero }}</p>
-          <input class="botao" 
-            [id]="artista.nome_usuario" 
-            type="checkbox" 
-            (click)="seguir(artista.nome_usuario, artista.key)" 
-          />	
-        </div> 
-
-      </div>
-    </div>
-</div>
-
 <div class="row" *ngFor="let usuario of usuarios">
   <div class="col d-flex justify-content-center">
     <div class="card">
       <div class="card-body">
         <img class="card-img" src="https://cdn.pixabay.com/photo/2012/04/26/19/43/profile-42914_960_720.png" />
-        <p [id]="usuario.nome_usuario" class="card-text artist"><strong>{{ usuario.nome_usuario }} </strong></p>
-        <p class="genre">{{ usuario.genero }}</p>
+        <p [id]="usuario.nome_usuario" class="card-text artist" *ngIf="usuario.usuario.isArtist==true; else senao"><strong>{{ usuario.nome_usuario }} </strong></p>
+        <p class="genre">{{ usuario.usuario.genero }}</p>
+        <ng-template #senao>
+          <p [id]="usuario.nome_usuario" class="card-text"><strong>{{ usuario.nome_usuario }} </strong></p>
+        </ng-template>
+
+
 
         <input class="botao" 
           [id]="usuario.nome_usuario" 

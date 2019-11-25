@@ -24,8 +24,7 @@ export class UsuariosComponent implements OnInit {
       this.email = user.email
       this.atualizarTimeLine()
       this.carregarListaSeguidores()
-      this.listar()
-      
+         
     })
   
 
@@ -54,13 +53,6 @@ export class UsuariosComponent implements OnInit {
     }) 
   }
 
-  public listar(): void{
-    let elements: Array<any>
-    for(let i=0; i<document.all.length; i++){
-      elements.push(document.getElementById[i])
-    }
-    console.log('aaaa', elements )
-  }
 
   public seguir(nomeUsuario: string, key: string ): void{
 
