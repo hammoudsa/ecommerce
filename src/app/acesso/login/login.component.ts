@@ -1,6 +1,7 @@
 import { Autenticacao } from './../../autenticacao.service';
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import * as firebase from 'firebase'
 
 
 
@@ -53,6 +54,11 @@ export class LoginComponent implements OnInit {
       //document.getElementById("txtmsg").textContent = "Email ou Senha inválidos" + error
       console.log('no painel login')
 
+  }
+
+  public redefinirSenha(): void {
+    
+    this.exibirPainel.emit('redefinir-senha')
   }
  
   

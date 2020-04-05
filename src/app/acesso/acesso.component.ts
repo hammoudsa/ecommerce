@@ -25,6 +25,10 @@ export class AcessoComponent implements OnInit {
     if(event === 'cadastro-artista'){
       this.valor=2;
     }
+
+    if(event === 'redefinir-senha'){
+      this.valor=3;
+    }
       
   }
 

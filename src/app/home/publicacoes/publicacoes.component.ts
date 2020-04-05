@@ -13,6 +13,8 @@ export class PublicacoesComponent implements OnInit {
   public publicacoes: any
   public usuarios: any
   public artistas: any
+  public usuarioAtual: any
+  public publicacaoKey: string
 
   constructor(private bd: Bd) { }
 
@@ -25,6 +27,7 @@ export class PublicacoesComponent implements OnInit {
   }
 
   public atualizarLista(): void {
+    let testeUser: string
     //if usuario or artista
     this.bd.consultaUsuarios()
       .then((listaUsuarios: any) =>{
@@ -41,16 +44,29 @@ export class PublicacoesComponent implements OnInit {
   }
 
   public atualizarTimeLine(): void {
+
+    for(let i=0;i<this.usuarios.length;i++){
+      if(this.usuarios[i].usuario.email == this.email){
+        this.usuarioAtual = this.usuarios[i].nome_usuario
+      }
+    }
     
     this.bd.consultaPublicacoes()
       .then((listaPublicacoes: any)=>{
         this.publicacoes = listaPublicacoes
         console.log('LISTA PUBLICAÇÕES',this.publicacoes)
       })    
-/*    this.bd.consultaPublicacoesUser(this.email)
-        .then((listaPublicacoes: any)=>{
-          this.publicacoes = listaPublicacoes
-          console.log('LISTA PUBLICAÇÕES',this.publicacoes)
-        })   */
   }
+  public apagarPublicacao(publicacaoKey: string): void{
+    this.publicacaoKey = publicacaoKey
+    let confirma = confirm('Este processo irá apagar essa publicação ')
+    if(confirma==true){
+      this.bd.apagarPublicacao(this.publicacaoKey)
+      this.atualizarTimeLine()
+    }
+
+
+  }
+
+
 }

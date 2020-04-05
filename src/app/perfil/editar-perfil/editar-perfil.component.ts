@@ -1,3 +1,4 @@
+import { Autenticacao } from './../../autenticacao.service';
 import { Progresso } from './../../progresso.service'
 import { Bd } from './../../bd.service'
 import { FormGroup, FormControl } from '@angular/forms'
@@ -7,6 +8,7 @@ import * as firebase from 'firebase'
 import 'rxjs/Rx'
 import { Observable } from 'rxjs/Observable'
 import { Subject } from 'rxjs/Rx'
+
 
 @Component({
   selector: 'app-editar-perfil',
@@ -29,7 +31,8 @@ export class EditarPerfilComponent implements OnInit {
 
   constructor(
     private bd: Bd,
-    private progresso: Progresso
+    private progresso: Progresso,
+    private autenticacao: Autenticacao
   ) { }
 
   ngOnInit() {
@@ -83,6 +86,26 @@ export class EditarPerfilComponent implements OnInit {
 
   public preparaImagemUpload(event: Event): void {
     this.imagem = (<HTMLInputElement>event.target).files
+  }
+
+  public deletarConta(): void{
+    let resposta = confirm('Você tem certeza de que deseja deletar sua conta? \nEsse procedimento apagará seus dados na plataforma')
+
+    if(resposta==true){
+
+      let user = firebase.auth().currentUser;
+      this.bd.deletarDadosConta()
+      user.delete().then(function() {
+        alert('Conta deletada com sucesso!')
+        
+        
+      }).catch(function(error) {
+        this.autenticacao.sair()
+      });
+    } 
+
+    
+
   }
    
 }

@@ -70,7 +70,7 @@ export class IncluirPublicacaoComponent implements OnInit {
             continua.next(false)
             this.progressoPublicacao = 'concluido';
             this.atualizarTimeline.emit();
-            this.resetForm();
+            //this.resetForm();
           }
         })
 

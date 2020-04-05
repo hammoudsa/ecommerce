@@ -2,6 +2,9 @@
   <div class="col d-flex justify-content-center">
     <div class="card">
       <div class="card-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="apagarPublicacao(publicacao.key)" *ngIf="publicacao.nome_usuario == usuarioAtual">
+          <span aria-hidden="true">&times;</span>
+        </button>
         <p class="card-text"><strong>{{ publicacao.nome_usuario }}</strong></p>
       </div>
 
@@ -12,10 +15,23 @@
            Evento: {{ publicacao.titulo }}
         </p></b>
 
+        <input class="botao2" 
+        *ngIf="publicacao.isArtist==true"
+        id="botao" 
+        type="checkbox" 
+        (click)="seguir(usuario.nome_usuario, usuario.key)" 
+      />
+
         <hr *ngIf="publicacao.isArtist==true && publicacao.titulo != null"/>
         <p class="card-text">
           {{ publicacao.descricao }}
         </p>
+        <input class="botao" 
+          *ngIf="publicacao.isArtist==false"
+          id="botao" 
+          type="checkbox" 
+          (click)="seguir(usuario.nome_usuario, usuario.key)" 
+        />
         <hr  *ngIf="publicacao.isArtist==true && publicacao.data != null"/>
         <p class="card-text" *ngIf="publicacao.isArtist==true && publicacao.data != null">
           Data: {{ publicacao.data }}

@@ -65,6 +65,8 @@ export class HomeComponent implements OnInit {
      }
      console.log(' ', this.isArtist)
    })
+
+   this.publicacoes.atualizarTimeLine()
   }
   
 }

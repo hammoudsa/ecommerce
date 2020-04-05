@@ -24,6 +24,8 @@ export class Autenticacao {
             delete usuario.senha
             firebase.database().ref(`usuario_detalhe/${btoa(usuario.email)}`)
                 .set({ usuario })
+                let user = firebase.auth().currentUser;
+                user.sendEmailVerification()
 
         })
         .catch((error: Error) => {

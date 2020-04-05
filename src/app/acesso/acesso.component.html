@@ -13,6 +13,12 @@
           </div>  
   </div>
 
+  <div *ngIf="valor === 3;">
+      <div class="formulario">
+          <app-redefinir-senha (exibirPainel)="exibirPainel($event)"></app-redefinir-senha>
+          </div>  
+  </div>
+
   <ng-template #formLogin>
       <div *ngIf="valor === 0;">
       <div class="formulario">

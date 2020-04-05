@@ -30,6 +30,7 @@ import { TermosComponent } from './acesso/termos/termos.component';
 import { PublicacoesUserComponent } from './perfil/publicacoes-user/publicacoes-user.component';
 import { EditarPerfilComponent } from './perfil/editar-perfil/editar-perfil.component';
 import { IncluirEventosComponent } from './home/incluir-eventos/incluir-eventos.component';
+import { RedefinirSenhaComponent } from './acesso/redefinir-senha/redefinir-senha.component';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { IncluirEventosComponent } from './home/incluir-eventos/incluir-eventos.
     TermosComponent,
     PublicacoesUserComponent,
     EditarPerfilComponent,
-    IncluirEventosComponent
+    IncluirEventosComponent,
+    RedefinirSenhaComponent
   ],
   imports: [
     BrowserModule,

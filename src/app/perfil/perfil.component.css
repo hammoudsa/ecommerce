@@ -37,6 +37,9 @@
     margin-left: 5px;
 }
 
+.espacamento{
+    padding-top: 10%
+}
 
 .search {
     background-image: url('/assets/search.png');

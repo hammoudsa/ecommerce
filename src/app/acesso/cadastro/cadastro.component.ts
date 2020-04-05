@@ -3,6 +3,7 @@ import { Autenticacao } from './../../autenticacao.service';
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms'
 import { Usuario } from './../usuario.model';
+import * as firebase from 'firebase'
 
  
 
@@ -36,6 +37,8 @@ export class CadastroComponent implements OnInit {
     this.exibirPainel.emit('login')
   }
 
+
+
   public cadastrarUsuario(): void {
 
     //cadastro usuario comum
@@ -49,12 +52,15 @@ export class CadastroComponent implements OnInit {
       ''
     )
 
+
     if(this.formulario.value.senha != this.formulario.value.confirmar_senha){
       window.alert('As senhas devem ser iguais!');
     }else{
       this.autenticacao.cadastrarUsuario(usuario)
       .then(() => this.exibirPainelLogin());
-      window.alert('Cadastrado realizado com sucesso!');
+      window.alert('Cadastrado realizado com sucesso! \nVerifique sua caixa de entrada para confirmar seu email');
+
+
     }
   }
 

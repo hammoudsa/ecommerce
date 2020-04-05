@@ -265,49 +265,6 @@ export class Bd {
             }
         }) 
 
-         
-
-       /*  return new Promise((resolve, reject)=>{
-
-            firebase.database().ref(`publicacoes/${btoa(emailUsuario)}`)
-            .orderByKey()
-            .once('value')
-            .then((snapshot: any) => {
-                
-                let listaPublicacoes: Array<any> = [];
-
-                snapshot.forEach((childSnapshot: any) => {
-                    
-                    let publicacao = childSnapshot.val()
-                    publicacao.key = childSnapshot.key
-
-                    listaPublicacoes.push(publicacao)
-
-                })                
- 
-                return listaPublicacoes.reverse()  
-            })
-            .then((listaPublicacoes: any) => {
-
-                listaPublicacoes.forEach((publicacao) => {
-                    //consulta da url da imagem
-                    firebase.storage().ref()
-                    .child(`imagens/${publicacao.key}`)
-                    .getDownloadURL()
-                    .then((url: string) => {
-
-                        publicacao.url_imagem = url
-                        //consulta nome do usuario da publicação
-                        firebase.database().ref(`usuario_detalhe/${btoa(emailUsuario)}`)
-                            .once('value')
-                            .then((snapshot: any) => {
-                                publicacao.nome_usuario = snapshot.val().usuario.nome_usuario
-                            })
-                    }) 
-                })
-                resolve(listaPublicacoes)
-            })
-        })  */
     }
 
     public consultaPublicacoesUser(email: any): Promise<any>{
@@ -386,8 +343,12 @@ export class Bd {
         })
     }
 
-    public deletarConta(): void{
+    public deletarDadosConta(): void{
+        firebase.database().ref('publicacoes').child(btoa(this.emailUsuario)).remove()
+    }
 
+    public apagarPublicacao(publicacaoKey: string): void{
+        firebase.database().ref('publicacoes').child(btoa(this.emailUsuario)).child(publicacaoKey).remove()
     }
 
 

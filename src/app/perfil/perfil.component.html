@@ -13,7 +13,9 @@
 </nav>
 <br />
 <div class="container">
-  <app-informacoes #usuarios (atualizarTimeLine)="atualizarTimeLine()"></app-informacoes>
-  <app-publicacoes-user #usuarios (atualizarTimeLine)="atualizarTimeLine()"></app-publicacoes-user>
-  <app-editar-perfil></app-editar-perfil>
+  <div class="espacamento">
+    <app-informacoes #usuarios (atualizarTimeLine)="atualizarTimeLine()"></app-informacoes>
+    <app-publicacoes-user #usuarios (atualizarTimeLine)="atualizarTimeLine()"></app-publicacoes-user>
+    <app-editar-perfil></app-editar-perfil>
+  </div>
 </div>
