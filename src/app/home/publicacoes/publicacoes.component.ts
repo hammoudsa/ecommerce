@@ -27,7 +27,6 @@ export class PublicacoesComponent implements OnInit {
   }
 
   public atualizarLista(): void {
-    let testeUser: string
     //if usuario or artista
     this.bd.consultaUsuarios()
       .then((listaUsuarios: any) =>{
@@ -44,7 +43,7 @@ export class PublicacoesComponent implements OnInit {
   }
 
   public atualizarTimeLine(): void {
-
+    this.publicacoes = ['']
     for(let i=0;i<this.usuarios.length;i++){
       if(this.usuarios[i].usuario.email == this.email){
         this.usuarioAtual = this.usuarios[i].nome_usuario
@@ -64,8 +63,22 @@ export class PublicacoesComponent implements OnInit {
       this.bd.apagarPublicacao(this.publicacaoKey)
       this.atualizarTimeLine()
     }
+  }
 
+  public comentar(publicacaoKey: string, publicacaoUser: string){
+    console.log('publicacao key:: ', publicacaoKey)
+    let comentario = (<HTMLInputElement>document.getElementById(publicacaoKey)).value;
 
+    if(comentario != ''){
+      let publicacaoEmail
+      for(let i in this.usuarios){
+        if(this.usuarios[i].nome_usuario == publicacaoUser){
+          publicacaoEmail = this.usuarios[i].usuario.email
+        }
+      }
+      this.bd.comentar(publicacaoEmail, publicacaoKey, this.usuarioAtual, comentario)
+      this.atualizarTimeLine()
+    }
   }
 
 

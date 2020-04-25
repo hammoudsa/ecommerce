@@ -16,6 +16,7 @@ export class Bd {
     public listaSeguindo: Array<any>
     public lista: Array<any>
     public listaPublicacoes: Array<any> = [];
+    public listaComentarios: Array<any> = [];
     public emailUsuario: any
     public listaKeys: Array<any>
 
@@ -237,12 +238,24 @@ export class Bd {
                                 if(publicacao.nome_usuario == this.listaTodosUsuarios[i].usuario.email){
                                     publicacao.nome_usuario = this.listaTodosUsuarios[i].nome_usuario
                                     publicacao.isArtist = this.listaTodosUsuarios[i].usuario.isArtist
-                                    if(this.listaTodosUsuarios[i].isArtist == true){
-                                        console.log('é artista saporra')
-                                    }
                                     this.listaPublicacoes.push(publicacao)
                                 }
                             }    
+                            childSnapshot.forEach((child: any) => {
+                                let desc = child.val()
+                                console.log(child.key)
+                                this.listaComentarios = []
+                                if(child.key == 'comentarios'){
+                                    child.forEach((coment: any) => {
+                                        publicacao.listaComentarios =[]
+                                        let comentario = coment.val()
+                                        console.log(coment.comentario)
+                                                                                        
+                                        this.listaComentarios.push(comentario)
+                                        publicacao.listaComentarios = this.listaComentarios
+                                    })
+                                }
+                            })
 
                         })                
                         return this.listaPublicacoes.reverse()  
@@ -349,6 +362,12 @@ export class Bd {
 
     public apagarPublicacao(publicacaoKey: string): void{
         firebase.database().ref('publicacoes').child(btoa(this.emailUsuario)).child(publicacaoKey).remove()
+    }
+
+    public comentar(userEmail: string, publicacaoKey: string, userAtual: string, comentario: any){
+        firebase.database().ref(`publicacoes/${btoa(userEmail)}/${publicacaoKey}/comentarios`)
+        .push( {usuario: userAtual, comentario: comentario})
+
     }
 
 

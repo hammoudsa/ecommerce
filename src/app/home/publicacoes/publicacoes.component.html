@@ -44,8 +44,27 @@
       <hr *ngIf="publicacao.isArtist==true && publicacao.compra != null"/>
       <p class="card-text" *ngIf="publicacao.isArtist==true  && publicacao.compra != null">
           <a [href]="publicacao.compra" target="_blank">Comprar ingresso</a>
-        </p>
-    <hr *ngIf="publicacao.isArtist==true && publicacao.titulo != null" />
+      </p>
+      <hr *ngIf="publicacao.isArtist==true && publicacao.titulo != null" />
+
+      
+      <div *ngFor="let comentario of publicacao.listaComentarios">
+        <hr *ngIf="publicacao.listaComentarios.length > 0"/>
+        <p class="card-text" >
+          <strong>{{ comentario.usuario }}: </strong> {{ comentario.comentario }}
+          
+        </p>  
+      </div>
+
+
+      <hr />
+      <input 
+        id={{publicacao.key}}
+        type="text" 
+        class="form-control comentario"
+        placeholder="Adicione um comentário..." 
+      />
+      <div class="comentar" (click)="comentar(publicacao.key, publicacao.nome_usuario)"></div>
  
     </div>
   </div>

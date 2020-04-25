@@ -74,3 +74,13 @@
     animation-fill-mode:forwards;
   }	
 
+  .comentar {
+    background-image: url('/assets/sendicon.png');
+    background-size: 28px;
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 30px;
+    float: right;
+    margin-top: 3px;
+    margin-right: 4px;
+}
