@@ -15,6 +15,7 @@ export class PublicacoesComponent implements OnInit {
   public artistas: any
   public usuarioAtual: any
   public publicacaoKey: string
+  public userAtualId: string
 
   constructor(private bd: Bd) { }
 
@@ -32,6 +33,11 @@ export class PublicacoesComponent implements OnInit {
       .then((listaUsuarios: any) =>{
         console.log('usuario component === ', listaUsuarios)
         this.usuarios = listaUsuarios
+        for(let i in this.usuarios){
+          if(this.usuarios[i].usuario.email == this.email){
+            this.userAtualId = this.usuarios[i].key;
+          }
+        }
         this.atualizarTimeLine()
       })
 
@@ -79,6 +85,32 @@ export class PublicacoesComponent implements OnInit {
       this.bd.comentar(publicacaoEmail, publicacaoKey, this.usuarioAtual, comentario)
       this.atualizarTimeLine()
     }
+  }
+
+  public curtir(publicacaoKey: string, publicacaoUser: string){
+    let publicacaoEmail
+  
+    for(let i in this.usuarios){
+      if(this.usuarios[i].nome_usuario == publicacaoUser){
+        publicacaoEmail = this.usuarios[i].usuario.email
+      }
+    }
+    let listaCurtidas;
+    for(let i in this.publicacoes){
+      if(this.publicacoes[i].key == publicacaoKey){
+        if(this.publicacoes[i].curtidas != null)
+         listaCurtidas = this.publicacoes[i].curtidas.listaCurtidas
+      }
+    }
+
+    if(listaCurtidas.includes(this.userAtualId)){
+      listaCurtidas.splice(listaCurtidas.indexOf(this.userAtualId), 1)
+    }else{
+      listaCurtidas.push(this.userAtualId)
+    }
+
+    this.bd.curtir(publicacaoKey, listaCurtidas, publicacaoEmail)
+    this.atualizarTimeLine()
   }
 
 

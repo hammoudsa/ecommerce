@@ -370,6 +370,12 @@ export class Bd {
 
     }
 
+    public curtir(publicacaoKey: any, listaCurtidas: Array<any>, emailUsuario: string): void {
+  
+        let userRef = firebase.database().ref(`publicacoes/${btoa(emailUsuario)}/${publicacaoKey}`)
+        userRef.child('curtidas').update({'listaCurtidas': listaCurtidas})
+    }
+
 
 
 }

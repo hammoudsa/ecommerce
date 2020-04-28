@@ -15,23 +15,52 @@
            Evento: {{ publicacao.titulo }}
         </p></b>
 
-        <input class="botao2" 
-        *ngIf="publicacao.isArtist==true"
-        id="botao" 
-        type="checkbox" 
-        (click)="seguir(usuario.nome_usuario, usuario.key)" 
-      />
-
         <hr *ngIf="publicacao.isArtist==true && publicacao.titulo != null"/>
         <p class="card-text">
           {{ publicacao.descricao }}
         </p>
-        <input class="botao" 
-          *ngIf="publicacao.isArtist==false"
-          id="botao" 
-          type="checkbox" 
-          (click)="seguir(usuario.nome_usuario, usuario.key)" 
-        />
+
+        <div class="container">
+          <div class="row">
+            <div class="col-md-auto">
+              <div *ngIf="publicacao.curtidas != null">
+                <input class="botao" 
+                  *ngIf="publicacao.curtidas.listaCurtidas.includes(userAtualId); else elseBlock"
+                  checked
+                  id="botao" 
+                  type="checkbox" 
+                  (click)="curtir(publicacao.key, publicacao.nome_usuario)" 
+                />
+                <ng-template #elseBlock>
+                  <input class="botao" 
+                    id="botao" 
+                    type="checkbox" 
+                    (click)="curtir(publicacao.key, publicacao.nome_usuario)" 
+                  />
+                </ng-template>
+              </div>
+                <input class="botao" 
+                  *ngIf="publicacao.curtidas == null"
+                  id="botao" 
+                  type="checkbox" 
+                  (click)="curtir(publicacao.key, publicacao.nome_usuario)" 
+                />
+
+
+            </div>
+            <div class="col" *ngIf="publicacao.curtidas != null">
+              <p class="card-text" *ngIf="publicacao.curtidas.listaCurtidas.length == 1">
+                <strong>{{ publicacao.curtidas.listaCurtidas.length }} curtida</strong> 
+              </p>
+              <p class="card-text" *ngIf="publicacao.curtidas.listaCurtidas.length > 1">
+                <strong>{{ publicacao.curtidas.listaCurtidas.length }} curtidas</strong> 
+              </p>  
+            </div>
+          </div>
+        </div>
+  
+
+
         <hr  *ngIf="publicacao.isArtist==true && publicacao.data != null"/>
         <p class="card-text" *ngIf="publicacao.isArtist==true && publicacao.data != null">
           Data: {{ publicacao.data }}
@@ -52,7 +81,6 @@
         <hr *ngIf="publicacao.listaComentarios.length > 0"/>
         <p class="card-text" >
           <strong>{{ comentario.usuario }}: </strong> {{ comentario.comentario }}
-          
         </p>  
       </div>
 
