@@ -102,10 +102,15 @@ export class PublicacoesComponent implements OnInit {
          listaCurtidas = this.publicacoes[i].curtidas.listaCurtidas
       }
     }
-
-    if(listaCurtidas.includes(this.userAtualId)){
-      listaCurtidas.splice(listaCurtidas.indexOf(this.userAtualId), 1)
+    if(listaCurtidas != null){
+      if(listaCurtidas.includes(this.userAtualId)){
+        listaCurtidas.splice(listaCurtidas.indexOf(this.userAtualId), 1)
+      }
+      else{
+        listaCurtidas.push(this.userAtualId)
+      }
     }else{
+      listaCurtidas = []
       listaCurtidas.push(this.userAtualId)
     }
 
