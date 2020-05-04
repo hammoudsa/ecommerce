@@ -48,7 +48,7 @@
 
 
             </div>
-            <div class="curtidas" *ngIf="publicacao.curtidas != null">
+            <div class="col" *ngIf="publicacao.curtidas != null" (click)="abrir(publicacao.key, publicacao.nome_usuario)">
               <p class="card-text" *ngIf="publicacao.curtidas.listaCurtidas.length == 1">
                 <strong>{{ publicacao.curtidas.listaCurtidas.length }} curtida</strong> 
               </p>

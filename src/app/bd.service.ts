@@ -376,6 +376,17 @@ export class Bd {
         userRef.child('curtidas').update({'listaCurtidas': listaCurtidas})
     }
 
+    public consultarEmailUsuario(nomeUsuario: string){
+        let query = firebase.database().ref('usuario_detalhe').orderByChild('usuario/nome_usuario').equalTo(nomeUsuario)
+        console.log('query::: ', query)
+
+        query.on('value', snap => {
+            console.log('value:: ', snap.val())
+        })
+    }
+
+
+
 
 
 }

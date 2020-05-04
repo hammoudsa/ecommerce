@@ -31,6 +31,7 @@ import { PublicacoesUserComponent } from './perfil/publicacoes-user/publicacoes-
 import { EditarPerfilComponent } from './perfil/editar-perfil/editar-perfil.component';
 import { IncluirEventosComponent } from './home/incluir-eventos/incluir-eventos.component';
 import { RedefinirSenhaComponent } from './acesso/redefinir-senha/redefinir-senha.component';
+import { PComponent } from './home/p/p.component';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { RedefinirSenhaComponent } from './acesso/redefinir-senha/redefinir-senh
     PublicacoesUserComponent,
     EditarPerfilComponent,
     IncluirEventosComponent,
-    RedefinirSenhaComponent
+    RedefinirSenhaComponent,
+    PComponent
   ],
   imports: [
     BrowserModule,

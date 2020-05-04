@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Bd } from './../../bd.service';
 import { Component, OnInit } from '@angular/core';
 import * as firebase from 'firebase'
@@ -17,7 +18,7 @@ export class PublicacoesComponent implements OnInit {
   public publicacaoKey: string
   public userAtualId: string
 
-  constructor(private bd: Bd) { }
+  constructor(private bd: Bd, private router: Router) { }
 
   ngOnInit() {
     firebase.auth().onAuthStateChanged((user) => {
@@ -116,6 +117,10 @@ export class PublicacoesComponent implements OnInit {
 
     this.bd.curtir(publicacaoKey, listaCurtidas, publicacaoEmail)
     this.atualizarTimeLine()
+  }
+
+  public abrir(publicacaoKey: string, publicacaoUser: string){
+    this.router.navigate(['p'], {queryParams: {user: publicacaoUser, id: publicacaoKey}})   
   }
 
 
