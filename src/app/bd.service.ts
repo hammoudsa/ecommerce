@@ -376,19 +376,69 @@ export class Bd {
         userRef.child('curtidas').update({'listaCurtidas': listaCurtidas})
     }
 
-    public consultarEmailUsuario(nomeUsuario: string){
+    public consultarUsuarioKey(nomeUsuario: string){
         let query = firebase.database().ref('usuario_detalhe').orderByChild('usuario/nome_usuario').equalTo(nomeUsuario)
         console.log('query::: ', query)
-
-        query.on('value', snap => {
-            console.log('value:: ', snap.val())
+        return new Promise((resolve, reject)=>{
+            query.on('value', snap => {
+                resolve(snap.val())
+            })
         })
     }
 
+    public consultarPublicacaoByKey(userKey: string, pubKey: string){
+        this.consultaUsuarios()
+        this.lista = this.listaKeys //Array com os keys da listaTodosUsuarios
+        let publicacao
+        return new Promise((resolve, reject)=>{
+            firebase.database().ref(`publicacoes/${userKey}/${pubKey}`)
+            .orderByKey()
+            .once('value')
+            .then((snapshot: any) => {                       
+                
+                publicacao = snapshot.val()
+                publicacao.key = snapshot.key
 
+                //insere nome do usuario da publicação
+                publicacao.nome_usuario = atob(userKey)
+                for(let i=0; i<this.listaTodosUsuarios.length; i++){
+                    if(publicacao.nome_usuario == this.listaTodosUsuarios[i].usuario.email){
+                        publicacao.nome_usuario = this.listaTodosUsuarios[i].nome_usuario
+                        publicacao.isArtist = this.listaTodosUsuarios[i].usuario.isArtist
+                    }
+                }    
 
+                snapshot.forEach((child: any) => {
+                    let desc = child.val()
+                    console.log(child.key)
+                    this.listaComentarios = []
+                    if(child.key == 'comentarios'){
+                        child.forEach((coment: any) => {
+                            publicacao.listaComentarios =[]
+                            let comentario = coment.val()
+                            console.log(coment.comentario)
+                                                                            
+                            this.listaComentarios.push(comentario)
+                            publicacao.listaComentarios = this.listaComentarios
+                        })
+                    }
+                })                
+                return publicacao
+            })
 
-
+            .then((publicacao: any) => {
+                //consulta da url da imagem
+                firebase.storage().ref()
+                .child(`imagens/${publicacao.key}`)
+                .getDownloadURL()
+                .then((url: string) => {
+                    publicacao.url_imagem = url    
+                }) 
+                
+                resolve(publicacao)
+            })          
+        }) 
+    }
 }
 
 

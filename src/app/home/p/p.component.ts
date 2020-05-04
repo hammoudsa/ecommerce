@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Bd } from './../../bd.service';
+import * as firebase from 'firebase'; 
 
 @Component({
   selector: 'app-p',
@@ -9,6 +10,9 @@ import { Bd } from './../../bd.service';
 export class PComponent implements OnInit {
   public userPublicacao: string
   public publicacaoKey: string
+  public publicacao: any
+  public userAtualId: string
+  public email: string
 
   constructor(private bd: Bd) { }
 
@@ -19,10 +23,22 @@ export class PComponent implements OnInit {
     this.userPublicacao = listaParams[0]
     this.publicacaoKey = listaParams[1]
 
-    console.log('pub:: ', this.userPublicacao)
-    this.bd.consultarEmailUsuario(this.userPublicacao)
+    firebase.auth().onAuthStateChanged((user) => {
+      this.email = user.email
+      this.userAtualId = btoa(this.email)
+    })
 
-    
+    console.log('pub:: ', this.userPublicacao)
+    this.bd.consultarUsuarioKey(this.userPublicacao)
+    .then(success => {
+      let user = Object.keys(success)
+      console.log('detalhes user: ', user[0])
+      this.bd.consultarPublicacaoByKey(user[0], this.publicacaoKey)
+      .then(success => {
+        console.log('publicacao:: ', success)
+        this.publicacao = success
+      })
+    })   
 
   }
 

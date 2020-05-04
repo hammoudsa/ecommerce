@@ -1,3 +1,112 @@
-<p>
-  p works!
-</p>
+<nav class="navbar fixed-top navbar-light bg-white">
+  <div class="container">
+    <div class="logo" (click)="home()"></div>
+    
+    <div>
+      <div class="search" (click)="procurar()"></div>
+      <div class="add-post" data-toggle="modal" data-target="#uploadModal"></div>
+      <div class="add-event" data-toggle="modal" data-target="#eventModal" *ngIf="isArtist==true"></div>
+      <div class="perfil" (click)="meuPerfil()"></div>
+    </div>
+  </div>  
+</nav>
+
+<div class="row">
+  <div class="col d-flex justify-content-center">
+    <div class="card">
+      <div class="card-body">
+<!--         <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="apagarPublicacao(publicacao.key)" *ngIf="publicacao.nome_usuario == usuarioAtual">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+        <p class="card-text"><strong>{{ publicacao.nome_usuario }}</strong></p>
+      </div>
+
+      <img class="card-img" [src]="publicacao.url_imagem || ''" />
+      
+      <div class="card-body">
+        <b><p class="titulo" *ngIf="publicacao.isArtist==true && publicacao.titulo != null">
+           Evento: {{ publicacao.titulo }}
+        </p></b>
+
+        <hr *ngIf="publicacao.isArtist==true && publicacao.titulo != null"/>
+        <p class="card-text">
+          {{ publicacao.descricao }}
+        </p>
+
+        <div class="container">
+          <div class="row">
+            <div class="col-md-auto">
+              <div *ngIf="publicacao.curtidas != null">
+                <input class="botao" 
+                  *ngIf="publicacao.curtidas.listaCurtidas.includes(userAtualId); else elseBlock"
+                  checked
+                  id="botao" 
+                  type="checkbox" 
+                  (click)="curtir(publicacao.key, publicacao.nome_usuario)" 
+                />
+                <ng-template #elseBlock>
+                  <input class="botao" 
+                    id="botao" 
+                    type="checkbox" 
+                    (click)="curtir(publicacao.key, publicacao.nome_usuario)" 
+                  />
+                </ng-template>
+              </div>
+                <input class="botao" 
+                  *ngIf="publicacao.curtidas == null"
+                  id="botao" 
+                  type="checkbox" 
+                  (click)="curtir(publicacao.key, publicacao.nome_usuario)" 
+                />
+
+
+            </div>
+            <div class="col" *ngIf="publicacao.curtidas != null" (click)="abrir(publicacao.key, publicacao.nome_usuario)">
+              <p class="card-text" *ngIf="publicacao.curtidas.listaCurtidas.length == 1">
+                <strong>{{ publicacao.curtidas.listaCurtidas.length }} curtida</strong> 
+              </p>
+              <p class="card-text" *ngIf="publicacao.curtidas.listaCurtidas.length > 1">
+                <strong>{{ publicacao.curtidas.listaCurtidas.length }} curtidas</strong> 
+              </p>  
+            </div>
+          </div>
+        </div>
+  
+
+
+        <hr  *ngIf="publicacao.isArtist==true && publicacao.data != null"/>
+        <p class="card-text" *ngIf="publicacao.isArtist==true && publicacao.data != null">
+          Data: {{ publicacao.data }}
+          </p>
+        <hr  *ngIf="publicacao.isArtist==true && publicacao.local != null"/>
+        <p class="card-text" *ngIf="publicacao.isArtist==true && publicacao.local != null">
+          Local: {{ publicacao.local }}
+         </p>
+
+      <hr *ngIf="publicacao.isArtist==true && publicacao.compra != null"/>
+      <p class="card-text" *ngIf="publicacao.isArtist==true  && publicacao.compra != null">
+          <a [href]="publicacao.compra" target="_blank">Comprar ingresso</a>
+      </p>
+      <hr *ngIf="publicacao.isArtist==true && publicacao.titulo != null" />
+
+      
+      <div *ngFor="let comentario of publicacao.listaComentarios">
+        <hr *ngIf="publicacao.listaComentarios.length > 0"/>
+        <p class="card-text" >
+          <strong>{{ comentario.usuario }}: </strong> {{ comentario.comentario }}
+        </p>  
+      </div>
+
+
+      <hr />
+      <input 
+        id={{publicacao.key}}
+        type="text" 
+        class="form-control comentario"
+        placeholder="Adicione um comentário..." 
+      />
+      <div class="comentar" (click)="comentar(publicacao.key, publicacao.nome_usuario)"></div>
+ 
+    </div>
+  </div>
+</div>
