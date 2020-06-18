@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     firebase.auth().onAuthStateChanged((user) => {
       this.email = user.email
-      this.atualizarTimeline()
+      //this.atualizarTimeline()
     })
   }
 

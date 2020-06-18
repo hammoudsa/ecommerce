@@ -11,14 +11,14 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     var firebaseConfig = {
-      apiKey: "AIzaSyAPkC0zsgrvFqvpqmUajp-v8zn0ucykdRA",
-      authDomain: "showin-db.firebaseapp.com",
-      databaseURL: "https://showin-db.firebaseio.com",
-      projectId: "showin-db",
-      storageBucket: "gs://showin-db.appspot.com/",
-      messagingSenderId: "35860468334",
-      appId: "1:35860468334:web:2117d275a436a0eb1acc7f",
-      measurementId: "G-HHKN4Q73GP"
+      apiKey: "AIzaSyAS6S9IFlCwzzinMmkUf04G6ktCJMs_zO8",
+      authDomain: "babysculture.firebaseapp.com",
+      databaseURL: "https://babysculture.firebaseio.com",
+      projectId: "babysculture",
+      storageBucket: "babysculture.appspot.com",
+      messagingSenderId: "1090773467104",
+      appId: "1:1090773467104:web:0ca2a3cdd875f536433585",
+      measurementId: "G-NTT1YPMNT0"
     }
     firebase.initializeApp(firebaseConfig)
     firebase.analytics()

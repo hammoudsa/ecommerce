@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Bd } from './../../bd.service';
 import * as firebase from 'firebase'; 
+import { IfStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-p',
@@ -28,7 +29,7 @@ export class PComponent implements OnInit {
       this.userAtualId = btoa(this.email)
     })
 
-    console.log('pub:: ', this.userPublicacao)
+/*     console.log('pub:: ', this.userPublicacao)
     this.bd.consultarUsuarioKey(this.userPublicacao)
     .then(success => {
       let user = Object.keys(success)
@@ -37,8 +38,32 @@ export class PComponent implements OnInit {
       .then(success => {
         console.log('publicacao:: ', success)
         this.publicacao = success
-      })
-    })   
+      }) 
+    })    */
+
+    this.bd.consultarUsuarioKey2(this.publicacaoKey)
+    .then(success => {
+      let user = Object.keys(success)
+      let keyUser
+      let lista = JSON.parse(JSON.stringify(success))
+      console.log('detalhes user: ', success)
+      for(let i in lista){
+        console.log('i::: ', i)
+        for(let j in lista[i]){
+          console.log('j::: ', j)
+          if(j == this.publicacaoKey){
+            keyUser = i;
+            console.log('keyUSER: ', keyUser)
+          }
+        }
+      }
+      //this.bd.consultarPublicacaoByKey(user[0], this.publicacaoKey
+    }) 
+/*       .then(success => {
+        console.log('publicacao:: ', success)
+        this.publicacao = success
+      }) 
+    })   */
 
   }
 

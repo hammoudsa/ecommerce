@@ -184,7 +184,7 @@ export class Bd {
 
         return new Promise((resolve, reject)=>{
 
-            firebase.database().ref(`usuario_detalhe`)
+            firebase.database().ref('usuario_detalhe')
             .once('value')
             .then((snapshot: any) => {
 
@@ -216,12 +216,12 @@ export class Bd {
 
     //consulta das publicações de acordo com a lista de seguidores retornada do  firebase
     public consultaPublicacoes(): Promise<any> {
-        this.consultaUsuarios()
+        console.log('lista keys::: ', this.listaKeys)
         this.lista = this.listaKeys //Array com os keys da listaTodosUsuarios
         this.listaPublicacoes = []
 
         return new Promise((resolve, reject)=>{
-            console.log(this.lista.length)
+            //console.log(this.lista.length)
             for(let i=0; i<this.lista.length; i++){
                 if(this.lista.includes(this.listaSeguindo[i])){
                     firebase.database().ref(`publicacoes/${this.listaSeguindo[i]}`)
@@ -379,6 +379,16 @@ export class Bd {
     public consultarUsuarioKey(nomeUsuario: string){
         let query = firebase.database().ref('usuario_detalhe').orderByChild('usuario/nome_usuario').equalTo(nomeUsuario)
         console.log('query::: ', query)
+        return new Promise((resolve, reject)=>{
+            query.on('value', snap => {
+                resolve(snap.val())
+            })
+        })
+    }
+
+    public consultarUsuarioKey2(imgKey: string){
+        let query = firebase.database().ref('publicacoes').orderByKey()
+        console.log('query2::: ', query)
         return new Promise((resolve, reject)=>{
             query.on('value', snap => {
                 resolve(snap.val())

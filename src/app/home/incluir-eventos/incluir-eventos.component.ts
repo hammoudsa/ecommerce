@@ -51,7 +51,7 @@ export class IncluirEventosComponent implements OnInit {
       descricaoVerificada = this.formulario.value.descricao
     }
 
-    if(this.formulario.value.data == null || this.formulario.value.compra == null || this.formulario.value.titulo == null  || this.formulario.value.local == null){
+    if(this.formulario.value.data == null || this.formulario.value.titulo == null){
        alert('Por favor, preencha todos os campos!')
     }else{ 
       this.bd.publicarEvento({    
@@ -59,8 +59,8 @@ export class IncluirEventosComponent implements OnInit {
         titulo: this.formulario.value.titulo,  
         descricao: descricaoVerificada,
         data: this.formulario.value.data,
-        local: this.formulario.value.local,
-        compra: this.formulario.value.compra, 
+        local: '',
+        compra: '', 
         imagem: this.imagem[0]
   
         }) 
