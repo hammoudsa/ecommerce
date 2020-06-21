@@ -6,6 +6,7 @@ import { AutenticacaoGuard } from './autenticacao-guard.service';
 import { Routes } from '@angular/router'
 import { AcessoComponent } from './acesso/acesso.component';
 import { HomeComponent } from './home/home.component';
+import { CarrinhoComponent } from './perfil/carrinho/carrinho.component';
 
 export const ROUTES: Routes = [
     {path: '', component: AcessoComponent},
@@ -13,5 +14,6 @@ export const ROUTES: Routes = [
     {path: 'procurar', component: ProcurarComponent, canActivate: [ AutenticacaoGuard ] },
     {path: 'perfil', component: PerfilComponent, canActivate: [ AutenticacaoGuard ] },
     {path: 'p', component: PComponent },
-    {path: 'termos', component: TermosComponent }
+    {path: 'termos', component: TermosComponent },
+    {path: 'carrinho', component: CarrinhoComponent}
 ]

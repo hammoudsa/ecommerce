@@ -32,6 +32,7 @@ import { EditarPerfilComponent } from './perfil/editar-perfil/editar-perfil.comp
 import { IncluirEventosComponent } from './home/incluir-eventos/incluir-eventos.component';
 import { RedefinirSenhaComponent } from './acesso/redefinir-senha/redefinir-senha.component';
 import { PComponent } from './home/p/p.component';
+import { CarrinhoComponent } from './perfil/carrinho/carrinho.component';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { PComponent } from './home/p/p.component';
     EditarPerfilComponent,
     IncluirEventosComponent,
     RedefinirSenhaComponent,
-    PComponent
+    PComponent,
+    CarrinhoComponent
   ],
   imports: [
     BrowserModule,

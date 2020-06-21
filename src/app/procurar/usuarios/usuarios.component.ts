@@ -62,12 +62,12 @@ export class UsuariosComponent implements OnInit {
     if(this.listaSeguindo.includes(key)){
       this.listaSeguindo.splice(this.listaSeguindo.indexOf(key), 1)
       console.log(this.listaSeguindo)
-      this.bd.inserirSeguidores(this.email, this.listaSeguindo)
+      //this.bd.inserirSeguidores(this.email, this.listaSeguindo)
       
     }else{
       this.listaSeguindo.push(key)
       console.log(this.listaSeguindo)
-      this.bd.inserirSeguidores(this.email, this.listaSeguindo)
+      //this.bd.inserirSeguidores(this.email, this.listaSeguindo)
           
     }
 

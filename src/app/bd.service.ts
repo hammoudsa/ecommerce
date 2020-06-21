@@ -171,12 +171,42 @@ export class Bd {
         })
     }
 
+        //consulta da listas de seguidores atreladas ao usuario logado
+        public consultaListaCarrinho(email: any): Promise<any> {
+            this.emailUsuario = email
+    
+            return new Promise((resolve, reject)=>{
+    
+                firebase.database().ref(`usuario_detalhe/${btoa(this.emailUsuario)}/usuario/listaCarrinho`)
+                .once('value')
+                .then((snapshot: any) => {
+    
+                    let listaProdutos: Array<any> = [];
+    
+                    snapshot.forEach((childSnapshot: any) => {
+                        
+                        let produto = childSnapshot.val()
+                        listaProdutos.push(produto)
+    
+                    }) 
+                    resolve(listaProdutos)   
+                })  
+                              
+            })
+        }
+
     //insere a lista de seguidores no firebase
-    public inserirSeguidores(email: any, listaSeguindo: Array<any>): void {
+    public inserirListaCarrinho(email: any, listaCarrinho: Array<any>): void {
         this.emailUsuario = email
-        this.listMockada = listaSeguindo    
+        this.listMockada = listaCarrinho    
         let userRef = firebase.database().ref(`usuario_detalhe/${btoa(this.emailUsuario)}`)
-        userRef.child('usuario').update({'listaSeguidores': this.listMockada})
+        userRef.child('usuario').update({'listaCarrinho': this.listMockada})
+    }
+
+    public inserirTotalCarrinho(email: any, total: any): void {
+        this.emailUsuario = email 
+        let userRef = firebase.database().ref(`usuario_detalhe/${btoa(this.emailUsuario)}`)
+        userRef.child('usuario').update({'totalCarrinho': total})
     }
 
     //consulta de todos os usuarios cadastrados na aplicação
@@ -212,6 +242,51 @@ export class Bd {
             })  
                           
         })
+    }
+    public consultaPublicacoesCarrinho(listaCarrinho): Promise<any> {
+        console.log('lista keys::: ', this.listaKeys)
+        this.lista = this.listaKeys //Array com os keys da listaTodosUsuarios
+        this.listaPublicacoes = []
+
+        return new Promise((resolve, reject)=>{
+            //console.log(this.lista.length)
+            /* for(let i in listaCarrinho){ */
+                    firebase.database().ref(`publicacoes/aGFtbW91ZHNhQG91dGxvb2suY29t/`)
+                    .orderByKey()
+                    .once('value')
+                    .then((snapshot: any) => {                       
+                        snapshot.forEach((childSnapshot: any) => {
+                            let publicacao = childSnapshot.val()
+                            publicacao.key = childSnapshot.key
+                            if(listaCarrinho.includes(publicacao.key)){
+                                console.log('publicacao.key: ', publicacao.key)
+                            
+                                this.listaPublicacoes.push(publicacao)
+                             
+                            }
+                 
+
+                        })                
+                        return this.listaPublicacoes.reverse()  
+                    })
+
+                     .then((listaPublicacoes: any) => {
+                        listaPublicacoes.forEach((publicacao) => {
+                            //consulta da url da imagem
+                            firebase.storage().ref()
+                            .child(`imagens/${publicacao.key}`)
+                            .getDownloadURL()
+                            .then((url: string) => {
+                                publicacao.url_imagem = url    
+                            }) 
+                        })
+                        resolve(listaPublicacoes)
+                     }) 
+                
+            /* } */
+            
+        }) 
+
     }
 
     //consulta das publicações de acordo com a lista de seguidores retornada do  firebase
@@ -388,6 +463,16 @@ export class Bd {
 
     public consultarUsuarioKey2(imgKey: string){
         let query = firebase.database().ref('publicacoes').orderByKey()
+        console.log('query2::: ', query)
+        return new Promise((resolve, reject)=>{
+            query.on('value', snap => {
+                resolve(snap.val())
+            })
+        })
+    }
+
+    public consultarTotalCarrinho(email: string){
+        let query = firebase.database().ref(`usuario_detalhe/${btoa(email)}/usuario`)
         console.log('query2::: ', query)
         return new Promise((resolve, reject)=>{
             query.on('value', snap => {

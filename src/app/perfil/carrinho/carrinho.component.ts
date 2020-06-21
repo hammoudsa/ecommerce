@@ -4,11 +4,11 @@ import { Component, OnInit } from '@angular/core';
 import * as firebase from 'firebase'
 
 @Component({
-  selector: 'app-publicacoes',
-  templateUrl: './publicacoes.component.html',
-  styleUrls: ['./publicacoes.component.css']
+  selector: 'app-carrinho',
+  templateUrl: './carrinho.component.html',
+  styleUrls: ['./carrinho.component.css']
 })
-export class PublicacoesComponent implements OnInit {
+export class CarrinhoComponent implements OnInit {
 
   public email: string
   public publicacoes: any
@@ -27,7 +27,7 @@ export class PublicacoesComponent implements OnInit {
     firebase.auth().onAuthStateChanged((user) => {
       this.email = user.email
       this.atualizarLista()
-      this.bd.consultaListaSeguidores(this.email)
+      //this.bd.consultaListaSeguidores(this.email)
     })
   }
 
@@ -60,78 +60,24 @@ export class PublicacoesComponent implements OnInit {
       }
     }
     
-    this.bd.consultaPublicacoes()
-      .then((listaPublicacoes: any)=>{
-        this.publicacoes = listaPublicacoes
-        console.log('LISTA PUBLICAÇÕES',this.publicacoes)
-      })    
-
     this.bd.consultaListaCarrinho(this.email)
-    .then(success => {
-        this.listaCarrinho = success;
-        this.qtdItens = this.listaCarrinho.length;
-    })
-  
+      .then(success => {
+          this.listaCarrinho = success;
+          this.qtdItens = this.listaCarrinho.length;
+          
+          this.bd.consultaPublicacoesCarrinho(this.listaCarrinho)
+          .then((listaPublicacoes: any)=>{
+            this.publicacoes = listaPublicacoes
+            console.log('LISTA PUBLICAÇÕES',this.publicacoes)
+          })    
+      })
+    
     this.bd.consultarTotalCarrinho(this.email)
-    .then((success: any) => {
-        console.log('TOTAL CARRINHO:: ', success.totalCarrinho)
-        this.carrinhoTotal = success.totalCarrinho
-    })
-  }
-  public apagarPublicacao(publicacaoKey: string): void{
-    this.publicacaoKey = publicacaoKey
-    let confirma = confirm('Este processo irá apagar essa publicação ')
-    if(confirma==true){
-      this.bd.apagarPublicacao(this.publicacaoKey)
-      this.atualizarTimeLine()
-    }
-  }
-
-  public comentar(publicacaoKey: string, publicacaoUser: string){
-    console.log('publicacao key:: ', publicacaoKey)
-    let comentario = (<HTMLInputElement>document.getElementById(publicacaoKey)).value;
-
-    if(comentario != ''){
-      let publicacaoEmail
-      for(let i in this.usuarios){
-        if(this.usuarios[i].nome_usuario == publicacaoUser){
-          publicacaoEmail = this.usuarios[i].usuario.email
-        }
-      }
-      this.bd.comentar(publicacaoEmail, publicacaoKey, this.usuarioAtual, comentario)
-      this.atualizarTimeLine()
-    }
-  }
-
-  public curtir(publicacaoKey: string, publicacaoUser: string){
-    let publicacaoEmail
-  
-    for(let i in this.usuarios){
-      if(this.usuarios[i].nome_usuario == publicacaoUser){
-        publicacaoEmail = this.usuarios[i].usuario.email
-      }
-    }
-    let listaCurtidas;
-    for(let i in this.publicacoes){
-      if(this.publicacoes[i].key == publicacaoKey){
-        if(this.publicacoes[i].curtidas != null)
-         listaCurtidas = this.publicacoes[i].curtidas.listaCurtidas
-      }
-    }
-    if(listaCurtidas != null){
-      if(listaCurtidas.includes(this.userAtualId)){
-        listaCurtidas.splice(listaCurtidas.indexOf(this.userAtualId), 1)
-      }
-      else{
-        listaCurtidas.push(this.userAtualId)
-      }
-    }else{
-      listaCurtidas = []
-      listaCurtidas.push(this.userAtualId)
-    }
-
-    this.bd.curtir(publicacaoKey, listaCurtidas, publicacaoEmail)
-    this.atualizarTimeLine()
+      .then((success: any) => {
+          console.log('TOTAL CARRINHO:: ', success.totalCarrinho)
+          this.carrinhoTotal = success.totalCarrinho
+      })
+    
   }
 
   public abrir(publicacaoKey: string, publicacaoUser: string){
@@ -161,3 +107,6 @@ export class PublicacoesComponent implements OnInit {
   }
 
 }
+
+
+
