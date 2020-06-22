@@ -18,8 +18,10 @@ export class PublicacoesComponent implements OnInit {
   public publicacaoKey: string
   public userAtualId: string
   public listaCarrinho = [];
+  public listaCarrinhoKeys = [];
+  public mapKeyQtd = new Map();
   public carrinhoTotal = 0.00;
-  private qtdItens = this.listaCarrinho.length;
+  public qtdItens = 0;
 
   constructor(private bd: Bd, private router: Router) { }
 
@@ -67,9 +69,15 @@ export class PublicacoesComponent implements OnInit {
       })    
 
     this.bd.consultaListaCarrinho(this.email)
-    .then(success => {
+    .then((success: any) => {
         this.listaCarrinho = success;
-        this.qtdItens = this.listaCarrinho.length;
+        for(let i in this.listaCarrinho){
+          this.listaCarrinhoKeys.push(this.listaCarrinho[i].key)
+          this.mapKeyQtd.set(this.listaCarrinho[i].key, this.listaCarrinho[i].qtd)
+          this.qtdItens = this.qtdItens + this.listaCarrinho[i].qtd
+          console.log('qtdItens', this.listaCarrinho[i].qtd)
+        }
+        
     })
   
     this.bd.consultarTotalCarrinho(this.email)
@@ -138,18 +146,46 @@ export class PublicacoesComponent implements OnInit {
     this.router.navigate(['p'], {queryParams: {user: publicacaoUser, id: publicacaoKey}})   
   }
 
-  public adicionar(prodCode: string, valor: string){
-    this.listaCarrinho.push(prodCode);
-    this.qtdItens = this.listaCarrinho.length;
+  public adicionar(prodCode: string, qtd: any, valor: string){
+    this.listaCarrinho.push({key: prodCode, qtd: qtd});
+    this.listaCarrinhoKeys.push(prodCode)
+    this.mapKeyQtd.set(prodCode, qtd)
+    this.qtdItens++;
     this.carrinhoTotal += parseFloat(valor.replace(',','.'))
     this.carrinhoTotal = parseFloat(this.carrinhoTotal.toFixed(2))
     this.bd.inserirListaCarrinho(this.email, this.listaCarrinho)
     this.bd.inserirTotalCarrinho(this.email, this.carrinhoTotal)
   }
 
+  public adicionarMesmoItem(prodCode: string, qtd: any, valor: string){
+    this.listaCarrinho[this.listaCarrinhoKeys.indexOf(prodCode)].qtd++;
+    this.qtdItens++;
+    this.carrinhoTotal += parseFloat(valor.replace(',','.'))
+    this.carrinhoTotal = parseFloat(this.carrinhoTotal.toFixed(2))
+    this.mapKeyQtd.set(prodCode, qtd+1);
+    this.bd.inserirListaCarrinho(this.email, this.listaCarrinho)
+    this.bd.inserirTotalCarrinho(this.email, this.carrinhoTotal)
+  }
+
+  public subtrairMesmoItem(prodCode: string, qtd: any, valor: string){
+    if(this.listaCarrinho[this.listaCarrinhoKeys.indexOf(prodCode)].qtd > 1){
+      this.listaCarrinho[this.listaCarrinhoKeys.indexOf(prodCode)].qtd--;
+      this.qtdItens--;
+      this.carrinhoTotal -= parseFloat(valor.replace(',','.'))
+      this.carrinhoTotal = parseFloat(this.carrinhoTotal.toFixed(2))
+      this.mapKeyQtd.set(prodCode, qtd-1);
+      this.bd.inserirListaCarrinho(this.email, this.listaCarrinho)
+      this.bd.inserirTotalCarrinho(this.email, this.carrinhoTotal)
+    }else{
+      this.remover(prodCode, valor)
+    }
+
+  }
+
   public remover(prodCode: string, valor: string){
-    this.listaCarrinho.splice(this.listaCarrinho.indexOf(prodCode),1);
-    this.qtdItens = this.listaCarrinho.length;
+    this.listaCarrinho.splice(this.listaCarrinhoKeys.indexOf(prodCode),1);
+    this.listaCarrinhoKeys.splice(this.listaCarrinhoKeys.indexOf(prodCode),1);
+    this.qtdItens--;
     this.carrinhoTotal -= parseFloat(valor.replace(',','.'))
     this.carrinhoTotal = parseFloat(this.carrinhoTotal.toFixed(2))
     this.bd.inserirListaCarrinho(this.email, this.listaCarrinho)

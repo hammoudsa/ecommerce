@@ -64,7 +64,7 @@ export class CarrinhoComponent implements OnInit {
       .then(success => {
           this.listaCarrinho = success;
           this.qtdItens = this.listaCarrinho.length;
-          
+
           this.bd.consultaPublicacoesCarrinho(this.listaCarrinho)
           .then((listaPublicacoes: any)=>{
             this.publicacoes = listaPublicacoes
@@ -100,10 +100,15 @@ export class CarrinhoComponent implements OnInit {
     this.carrinhoTotal = parseFloat(this.carrinhoTotal.toFixed(2))
     this.bd.inserirListaCarrinho(this.email, this.listaCarrinho)
     this.bd.inserirTotalCarrinho(this.email, this.carrinhoTotal)
+    this.atualizarTimeLine()
   }
 
   public meuCarrinho(){
     this.router.navigate(['/carrinho'])
+  }
+
+  public home(){
+    this.router.navigate(['/home'])
   }
 
 }

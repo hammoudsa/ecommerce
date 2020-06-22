@@ -2,7 +2,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" style="color:white !important" href="#">BABY'S CULTURE</a>
+      <a class="navbar-brand" style="color:white !important; cursor: pointer" (click)="home()">BABY'S CULTURE</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -28,35 +28,16 @@
   </nav>
   <!-- Page Content -->
   <div class="container">
-
+    
     <div class="row">
-
-      <div class="col-lg-3">
-
-        <h1 class="my-4" style="font-size: 24px;">Carrinho de compras</h1>
-        <div class="list-group">
-          <a href="#" class="list-group-item">Conjuntos</a>
-          <a href="#" class="list-group-item">Camisetas</a>
-          <a href="#" class="list-group-item">Calças</a>
-          <a href="#" class="list-group-item">Sapatos</a>
-          <div class="add-event" data-toggle="modal" data-target="#eventModal"></div>
-        </div>
-
-      </div>
-      <!-- /.col-lg-3 -->
-
+      
       <div class="col-lg-9">
-        <!-- AQUI SERÁ O MENU SUPERIOR  -->
-        <div>
-          <div class="carrinho">carrinho: {{ qtdItens }} Itens</div>
-          <div class="carrinho">total: R$ {{ carrinhoTotal }}</div>
-        </div>
 
         
         <div class="row">
-
+         
           <div class="col-lg-4 col-md-6 mb-4" *ngFor="let publicacao of publicacoes">
-            <div class="card h-100" *ngIf="listaCarrinho.includes(publicacao.key)">
+            <div class="card h-20 w-80" *ngIf="listaCarrinho.includes(publicacao.key)">
               <a href="#"><img class="card-img-top" [src]="publicacao.url_imagem || ''" alt=""></a>
               <div class="card-body">
                 <h4 class="card-title">
@@ -73,18 +54,43 @@
                   (click)="remover(publicacao.key, publicacao.data)" 
                   *ngIf="listaCarrinho.includes(publicacao.key); else elseBlock"
                 />
+                <button style="margin-left: 1rem;">-</button>
+                1
+                <button>+</button>
                 <ng-template #elseBlock>
                   <input class="botao" 
                   id="botao" 
                   type="checkbox" 
                   (click)="adicionar(publicacao.key, publicacao.data)" 
                 />
+
                 </ng-template>
               </div>
             </div>
           </div>
 
         </div>
+      
+      </div>
+    
+      <!-- /.col-lg-3 -->
+
+      <div class="col-lg-3">
+        <!-- AQUI SERÁ O MENU SUPERIOR  -->
+        <h1 class="my-4" style="font-size: 24px;">Carrinho de compras</h1>
+        <div class="menu-superior">
+  
+          <div class="carrinho"> {{ qtdItens }} Itens</div>
+          <!-- <span class="carrinho">Some text here</span> -->
+          <div>Total: R$ {{ carrinhoTotal }}</div>
+          <div>
+            <button>COMPRAR</button>
+          </div>
+       
+        </div>
+
+        
+        
         <!-- /.row -->
 
       </div>

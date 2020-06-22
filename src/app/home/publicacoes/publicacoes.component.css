@@ -3,12 +3,32 @@
     border-color: #E6E6E6;
     max-width: 600px;
 }
+
+.menu-superior{
+  margin-top: 1.2rem;
+  border: 1.2px solid;
+  border-color: #E6E6E6;
+  border-radius: 5px;
+  padding: 10px;
+}
+
 body {
   padding-top: 56px;
 }
 .comentario {
     border: none;
     padding: 0
+}
+
+.carrinho{
+  background-image: url('/assets/carrinho.png');
+  background-size: 30px;
+  background-repeat: no-repeat;
+  width: 80px;
+  height: 32px;
+  float: right;
+  overflow: hidden;
+  text-align: right;
 }
 
 .add-event {

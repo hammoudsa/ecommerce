@@ -2,7 +2,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" style="color:white !important" href="#">BABY'S CULTURE</a>
+      <a class="navbar-brand" style="color:white !important; cursor: pointer ">BABY'S CULTURE</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -17,7 +17,7 @@
             <a style="color:white !important" class="nav-link" href="#">Produtos</a>
           </li>
           <li class="nav-item" (click)="meuCarrinho()">
-            <a style="color:white !important" class="nav-link" >Meus Pedidos</a>
+            <a style="color:white !important; cursor: pointer" class="nav-link" >Meus Pedidos</a>
           </li>
           <li class="nav-item">
             <a style="color:white !important" class="nav-link" >Conta</a>
@@ -47,9 +47,19 @@
 
       <div class="col-lg-9">
         <!-- AQUI SERÁ O MENU SUPERIOR  -->
-        <div>
-          <div class="carrinho">carrinho: {{ qtdItens }} Itens</div>
-          <div class="carrinho">total: R$ {{ carrinhoTotal }}</div>
+        <div class="menu-superior">
+          <div class="row">
+            <div class="col-12 col-sm-6 col-md-8">
+              
+            </div>
+            
+            <div class="col-12 col-md-4">
+              <div class="carrinho"> {{ qtdItens }} Itens</div>
+              <!-- <span class="carrinho">Some text here</span> -->
+              
+              
+            </div>
+          </div>
         </div>
 
         <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
@@ -60,13 +70,13 @@
           </ol>
           <div class="carousel-inner" role="listbox">
             <div class="carousel-item active">
-              <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="First slide">
+              <img class="d-block img-fluid" src="/assets/banner01.png" alt="First slide">
             </div>
             <div class="carousel-item">
-              <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="Second slide">
+              <img class="d-block img-fluid" src="/assets/banner02.png" alt="Second slide">
             </div>
             <div class="carousel-item">
-              <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="Third slide">
+              <img class="d-block img-fluid" src="/assets/banner03.png" alt="Third slide">
             </div>
           </div>
           <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -97,14 +107,21 @@
                   type="checkbox" 
                   checked
                   (click)="remover(publicacao.key, publicacao.data)" 
-                  *ngIf="listaCarrinho.includes(publicacao.key); else elseBlock"
+                  *ngIf="listaCarrinhoKeys.includes(publicacao.key); else elseBlock"
                 />
+                 
+                  <button style="margin-left: 1rem; padding-left: 0.6em; padding-right: 0.6em;" *ngIf="listaCarrinhoKeys.includes(publicacao.key)" (click)="subtrairMesmoItem(publicacao.key, mapKeyQtd.get(publicacao.key), publicacao.data)">-</button>
+                  <span style="padding: 0.5em;" *ngIf="listaCarrinhoKeys.includes(publicacao.key)">{{mapKeyQtd.get(publicacao.key)}}</span>
+                  <button style="padding-left: 0.5em; padding-right: 0.5em;" *ngIf="listaCarrinhoKeys.includes(publicacao.key)" (click)="adicionarMesmoItem(publicacao.key, mapKeyQtd.get(publicacao.key), publicacao.data)">+</button>
+
+
                 <ng-template #elseBlock>
                   <input class="botao" 
                   id="botao" 
                   type="checkbox" 
-                  (click)="adicionar(publicacao.key, publicacao.data)" 
+                  (click)="adicionar(publicacao.key, 1, publicacao.data)" 
                 />
+
                 </ng-template>
               </div>
             </div>

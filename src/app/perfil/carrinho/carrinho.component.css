@@ -122,3 +122,32 @@ body {
   margin-left: 50px;
   margin-top: -25px;
 }
+
+.carrinho{
+    background-image: url('/assets/carrinho.png');
+    background-size: 30px;
+    background-repeat: no-repeat;
+    width: 80px;
+    height: 32px;
+    float: right;
+    overflow: hidden;
+    text-align: right;
+  }
+  
+  .menu-superior{
+    margin-top: 1.2rem;
+    border: 1.2px solid;
+    border-color: #E6E6E6;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 1.2rem;
+  }
+
+  .itens{
+      margin-top: 1.2rem;
+      margin-left: -3rem;
+  }
+
+  .row{
+      margin-top: 1.2rem !important;
+  }
