@@ -37,7 +37,7 @@
         <div class="row">
          
           <div class="col-lg-4 col-md-6 mb-4" *ngFor="let publicacao of publicacoes">
-            <div class="card h-20 w-80" *ngIf="listaCarrinho.includes(publicacao.key)">
+            <div class="card h-20 w-80" *ngIf="listaCarrinhoKeys.includes(publicacao.key)">
               <a href="#"><img class="card-img-top" [src]="publicacao.url_imagem || ''" alt=""></a>
               <div class="card-body">
                 <h4 class="card-title">
@@ -52,16 +52,19 @@
                   type="checkbox" 
                   checked
                   (click)="remover(publicacao.key, publicacao.data)" 
-                  *ngIf="listaCarrinho.includes(publicacao.key); else elseBlock"
+                  *ngIf="listaCarrinhoKeys.includes(publicacao.key); else elseBlock"
                 />
-                <button style="margin-left: 1rem;">-</button>
-                1
-                <button>+</button>
+                 
+                  <button style="margin-left: 1rem; padding-left: 0.6em; padding-right: 0.6em;" *ngIf="listaCarrinhoKeys.includes(publicacao.key)" (click)="subtrairMesmoItem(publicacao.key, mapKeyQtd.get(publicacao.key), publicacao.data)">-</button>
+                  <span style="padding: 0.5em;" *ngIf="listaCarrinhoKeys.includes(publicacao.key)">{{mapKeyQtd.get(publicacao.key)}}</span>
+                  <button style="padding-left: 0.5em; padding-right: 0.5em;" *ngIf="listaCarrinhoKeys.includes(publicacao.key)" (click)="adicionarMesmoItem(publicacao.key, mapKeyQtd.get(publicacao.key), publicacao.data)">+</button>
+
+
                 <ng-template #elseBlock>
                   <input class="botao" 
                   id="botao" 
                   type="checkbox" 
-                  (click)="adicionar(publicacao.key, publicacao.data)" 
+                  (click)="adicionar(publicacao.key, 1, publicacao.data)" 
                 />
 
                 </ng-template>
