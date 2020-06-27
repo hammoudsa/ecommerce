@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 import { Bd } from './../../bd.service';
 import { Component, OnInit } from '@angular/core';
 import * as firebase from 'firebase'
+import { format } from 'url';
 
 @Component({
   selector: 'app-publicacoes',
@@ -22,6 +23,10 @@ export class PublicacoesComponent implements OnInit {
   public mapKeyQtd = new Map();
   public carrinhoTotal = 0.00;
   public qtdItens = 0;
+  public paginaAtual = 1;
+  public qtdPaginasArray = [];
+  public qtdPaginas;
+
 
   constructor(private bd: Bd, private router: Router) { }
 
@@ -64,8 +69,12 @@ export class PublicacoesComponent implements OnInit {
     
     this.bd.consultaPublicacoes()
       .then((listaPublicacoes: any)=>{
-        this.publicacoes = listaPublicacoes
-        console.log('LISTA PUBLICAÇÕES',this.publicacoes)
+        
+        this.qtdPaginas = Math.round(listaPublicacoes.length / 3) + (listaPublicacoes.length%3)
+        for(let i=1; i<this.qtdPaginas+1; i++){
+          this.qtdPaginasArray.push(i);
+        }
+        this.publicacoes = listaPublicacoes.splice(0, 3)
       })    
 
     this.bd.consultaListaCarrinho(this.email)
@@ -194,6 +203,21 @@ export class PublicacoesComponent implements OnInit {
 
   public meuCarrinho(){
     this.router.navigate(['/carrinho'])
+  }
+
+  public pageChange(num: any){
+    this.paginaAtual = num;
+    let inicio = (num-1)*3;
+
+    this.publicacoes = ['']
+
+    //total paginas = divide total publicacoes por 3 e arrendonda depois soma com o resto da divisão
+    //splice(3*pagina,3)
+    this.bd.consultaPublicacoes()
+      .then((listaPublicacoes: any)=>{
+        this.publicacoes = listaPublicacoes.splice(inicio, 3)
+      })    
+
   }
 
 }

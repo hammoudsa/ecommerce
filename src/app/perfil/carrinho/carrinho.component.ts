@@ -65,10 +65,11 @@ export class CarrinhoComponent implements OnInit {
     this.bd.consultaListaCarrinho(this.email)
       .then((success: any) => {
           this.listaCarrinho = success;
+          this.qtdItens = 0;
           for(let i in this.listaCarrinho){
             this.listaCarrinhoKeys.push(this.listaCarrinho[i].key)
             this.mapKeyQtd.set(this.listaCarrinho[i].key, this.listaCarrinho[i].qtd)
-            this.qtdItens = this.qtdItens + this.listaCarrinho[i].qtd
+            this.qtdItens += this.listaCarrinho[i].qtd
             console.log('qtdItens', this.listaCarrinho[i].qtd)
           }
           console.log('listaCarrinhoKeys', this.listaCarrinhoKeys)
@@ -135,6 +136,7 @@ export class CarrinhoComponent implements OnInit {
     this.carrinhoTotal = parseFloat(this.carrinhoTotal.toFixed(2))
     this.bd.inserirListaCarrinho(this.email, this.listaCarrinho)
     this.bd.inserirTotalCarrinho(this.email, this.carrinhoTotal)
+    this.atualizarTimeLine()
   }
 
   public meuCarrinho(){
