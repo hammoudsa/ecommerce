@@ -1,0 +1,9 @@
+.btn {
+    float: right;
+    margin-top: 4px;
+}
+
+.btn2 {
+    border-color: red;
+    background-color: red;
+}

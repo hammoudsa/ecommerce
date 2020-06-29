@@ -1,0 +1,20 @@
+<!-- <nav class="navbar fixed-top navbar-light bg-white">
+  <div class="container">
+
+    
+    <div>
+      <div class="search" (click)="procurar()"></div>
+      <div class="add-post" data-toggle="modal" data-target="#uploadModal"></div>
+      <div class="add-event" data-toggle="modal" data-target="#eventModal" *ngIf="isArtist==true"></div>
+      <div class="perfil" (click)="meuPerfil()"></div>
+    </div>
+  </div>  
+</nav>
+
+<br /><br /><br /> -->
+<div class="container">
+  <app-publicacoes #publicacoes></app-publicacoes>
+  <app-incluir-publicacao (atualizarTimeline)="atualizarTimeline()"></app-incluir-publicacao>   
+  <app-incluir-eventos (atualizarTimeline)="atualizarTimeline()"></app-incluir-eventos>   
+
+</div>

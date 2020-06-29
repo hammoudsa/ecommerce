@@ -1,0 +1,111 @@
+<body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" style="color:white !important; cursor: pointer" (click)="home()">BABY'S CULTURE</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a style="color:white !important" class="nav-link" href="#">Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a style="color:white !important" class="nav-link" href="#">Produtos</a>
+          </li>
+          <li class="nav-item">
+            <a style="color:white !important" class="nav-link" href="#">Meus Pedidos</a>
+          </li>
+          <li class="nav-item">
+            <a style="color:white !important" class="nav-link" href="#">Conta</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Content -->
+  <div class="container">
+    
+    <div class="row">
+      
+      <div class="col-lg-9">
+        <h1 class="my-4" style="font-size: 24px;">Itens do carrinho</h1>
+        
+        <div class="row">
+         
+          <div class="col-lg-4 col-md-6 mb-4" *ngFor="let publicacao of publicacoes">
+            <div class="card h-20 w-80" *ngIf="listaCarrinhoKeys.includes(publicacao.key)">
+              <a href="#"><img class="card-img-top" [src]="publicacao.url_imagem || ''" alt=""></a>
+              <div class="card-body">
+                <h4 class="card-title">
+                  <a href="#">{{ publicacao.titulo }}</a>
+                </h4>
+                <h5>R$ {{publicacao.data}}</h5>
+                <p class="card-text">{{ publicacao.descricao }}</p>
+              </div>
+              <div class="card-footer">
+                <input class="botao" 
+                  id="botao" 
+                  type="checkbox" 
+                  checked
+                  (click)="remover(publicacao.key, publicacao.data)" 
+                  *ngIf="listaCarrinhoKeys.includes(publicacao.key); else elseBlock"
+                />
+                 
+                  <button style="margin-left: 1rem; padding-left: 0.6em; padding-right: 0.6em;" *ngIf="listaCarrinhoKeys.includes(publicacao.key)" (click)="subtrairMesmoItem(publicacao.key, mapKeyQtd.get(publicacao.key), publicacao.data)">-</button>
+                  <span style="padding: 0.5em;" *ngIf="listaCarrinhoKeys.includes(publicacao.key)">{{mapKeyQtd.get(publicacao.key)}}</span>
+                  <button style="padding-left: 0.5em; padding-right: 0.5em;" *ngIf="listaCarrinhoKeys.includes(publicacao.key)" (click)="adicionarMesmoItem(publicacao.key, mapKeyQtd.get(publicacao.key), publicacao.data)">+</button>
+
+
+                <ng-template #elseBlock>
+                  <input class="botao" 
+                  id="botao" 
+                  type="checkbox" 
+                  (click)="adicionar(publicacao.key, 1, publicacao.data)" 
+                />
+
+                </ng-template>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      
+      </div>
+    
+      <!-- /.col-lg-3 -->
+
+      <div class="col-lg-3">
+        <!-- AQUI SERÁ O MENU SUPERIOR  -->
+        <h1 class="my-4" style="font-size: 24px;">Detalhes do pedido</h1>
+        <div class="menu-superior">
+  
+          <div class="carrinho"> {{ qtdItens }} Itens</div>
+          <!-- <span class="carrinho">Some text here</span> -->
+          <div>Total: R$ {{ carrinhoTotal }}</div>
+          <div>
+            <button>COMPRAR</button>
+          </div>
+       
+        </div>
+
+        
+        
+        <!-- /.row -->
+
+      </div>
+      <!-- /.col-lg-9 -->
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+
+
+</body>

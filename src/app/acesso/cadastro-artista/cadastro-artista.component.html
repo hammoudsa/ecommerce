@@ -1,0 +1,83 @@
+<div class="card" style="width: 20rem;">
+  <div class="card-body">
+    <div class="card-title"></div>
+    
+    <form [formGroup]="formulario" (ngSubmit)="cadastrarUsuario()">
+      <div class="form-group" >
+        <input 
+          type="email" 
+          class="form-control" 
+          placeholder="E-mail"
+          formControlName="email"
+          
+        >
+      </div>
+      <div class="form-group">
+        <input 
+          type="text"
+          class="form-control"  
+          placeholder="Nome artístico"
+          formControlName="nome_completo"
+          
+        >
+      </div>
+      <div class="form-group">
+        <input 
+          type="text"
+          class="form-control" 
+          placeholder="Nome de usuário"
+          formControlName="nome_usuario"
+          
+        >
+      </div>
+      <div class="form-group">
+        <input 
+          type="password"
+          class="form-control" 
+          placeholder="Senha"
+          formControlName="senha"
+          
+        >
+      </div>
+      <div class="form-group">
+          <input 
+            type="password"
+            class="form-control" 
+            placeholder="Confirmar senha"
+            formControlName="confirmar_senha"
+            
+          >
+      </div>
+      Selecione seu gênero:
+      <div class="styled-select slate">
+          <div class="form-group">
+            <select name="genero" class="form-control" formControlName="genero">
+                <option value="eletronica">Eletrônica</option>
+                <option value="funk">Funk</option>
+                <option value="mpb">MPB</option>
+                <option value="pagode">Pagode</option>
+                <option value="pop">Pop</option>
+                <option value="rap">Rap</option>
+                <option value="reggae">Reggae</option>
+                <option value="rock">Rock</option>
+                <option value="samba">Samba</option>
+                <option value="sertanejo">Sertanejo</option>
+              </select>
+          </div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-sm btn-block">Cadastre-se</button>
+    </form>
+    <hr />
+
+    <p class="small text-center" >Ao cadastrar-se, você concorda com nossos <a href="http://showin.com.br/termos.html" target="_blank"> <b>Termos</b> e <b>Política de Privacidade</b></a>.</p>
+
+  </div>
+</div>
+<br />
+<div class="card" style="width: 20rem;">
+  <div class="card-body">
+    <p class="card-text">
+      Tem uma conta? <a href="#" (click)="exibirPainelLogin()" class="card-link">Faça login</a>
+    </p> 
+  </div>
+</div>

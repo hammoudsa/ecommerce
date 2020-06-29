@@ -1,0 +1,21 @@
+<nav class="navbar fixed-top navbar-light bg-white">
+  <div class="container">
+    <div class="logo" (click)="home()"></div>
+    
+    <div>
+      <div class="search" (click)="procurar()"></div>
+     
+      <div class="edit" data-toggle="modal" data-target="#uploadModal"></div>
+      <a class="sair" href="#" (click)="sair()" style="margin-left: 15px">Sair</a>
+      <!--<button type="button" class="btn btn-primary">Meu perfil</button>-->
+    </div>
+  </div>  
+</nav>
+<br />
+<div class="container">
+  <div class="espacamento">
+    <app-informacoes #usuarios (atualizarTimeLine)="atualizarTimeLine()"></app-informacoes>
+    <app-publicacoes-user #usuarios (atualizarTimeLine)="atualizarTimeLine()"></app-publicacoes-user>
+    <app-editar-perfil></app-editar-perfil>
+  </div>
+</div>

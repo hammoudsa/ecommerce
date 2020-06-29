@@ -1,0 +1,31 @@
+<div class="bg-login">
+
+  <div class="formulario">
+    <div *ngIf="valor === 1; else formLogin">
+      <div class="formulario">
+          <app-cadastro (exibirPainel)="exibirPainel($event)"></app-cadastro>
+          </div>  
+  </div>
+  
+  <div *ngIf="valor === 2;">
+      <div class="formulario">
+          <app-cadastro-artista (exibirPainel)="exibirPainel($event)"></app-cadastro-artista>
+          </div>  
+  </div>
+
+  <div *ngIf="valor === 3;">
+      <div class="formulario">
+          <app-redefinir-senha (exibirPainel)="exibirPainel($event)"></app-redefinir-senha>
+          </div>  
+  </div>
+
+  <ng-template #formLogin>
+      <div *ngIf="valor === 0;">
+      <div class="formulario">
+          <app-login (exibirPainel)="exibirPainel($event)"></app-login>
+          </div>
+        </div>
+  </ng-template>
+  </div>
+    
+</div>
