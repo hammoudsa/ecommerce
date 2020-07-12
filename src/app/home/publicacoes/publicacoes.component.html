@@ -128,12 +128,15 @@
           </div>
 
         </div>
-
-        <div style="display: inline; padding-bottom: 5rem;" *ngFor="let pagina of qtdPaginasArray">
-          <button style="margin-left: 0.5rem; padding-left: 0.6em; padding-right: 0.6em; background-color: violet;" *ngIf="paginaAtual==pagina; else elseBlockButton" (click)="pageChange(pagina)">{{pagina}}</button>
-          <ng-template #elseBlockButton>
-            <button style="margin-left: 0.5rem; padding-left: 0.6em; padding-right: 0.6em;" (click)="pageChange(pagina)">{{pagina}}</button>
-          </ng-template>
+        <div class="btn-group">
+          <button style="padding-left: 0.6em; padding-right: 0.6em;" (click)="voltar()"  *ngIf="paginaAtual > 1"> < </button>
+          <div *ngFor="let pagina of qtdPaginasArray">
+            <button style="padding-left: 0.6em; padding-right: 0.6em; background-color: violet;" *ngIf="paginaAtual==pagina; else elseBlockButton" (click)="pageChange(pagina)">{{pagina}}</button>
+            <ng-template #elseBlockButton>
+              <button style="padding-left: 0.6em; padding-right: 0.6em;" (click)="pageChange(pagina)">{{pagina}}</button>
+            </ng-template>
+          </div>
+          <button style="padding-left: 0.6em; padding-right: 0.6em;" (click)="avancar()" *ngIf="paginaAtual < qtdPaginas"> > </button>
         </div>
 
         

@@ -220,4 +220,15 @@ export class PublicacoesComponent implements OnInit {
 
   }
 
+  public avancar(){
+    this.paginaAtual++;
+    this.pageChange(this.paginaAtual);
+  }
+
+  public voltar(){
+    this.paginaAtual--;
+    this.pageChange(this.paginaAtual);
+  }
+
+
 }
