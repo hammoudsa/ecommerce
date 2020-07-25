@@ -26,11 +26,16 @@ export class CarrinhoComponent implements OnInit {
   constructor(private bd: Bd, private router: Router) { }
 
   ngOnInit() {
-    firebase.auth().onAuthStateChanged((user) => {
-      this.email = user.email
-      this.atualizarLista()
-      //this.bd.consultaListaSeguidores(this.email)
-    })
+    var cUser = firebase.auth().currentUser;
+    console.log('CURRENT USER  ', cUser);
+    if(cUser != null){
+      firebase.auth().onAuthStateChanged((user) => {
+        this.email = user.email
+        
+        //this.bd.consultaListaSeguidores(this.email)
+      })
+    }
+    this.atualizarLista()
   }
 
   public atualizarLista(): void {

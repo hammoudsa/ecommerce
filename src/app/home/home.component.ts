@@ -24,10 +24,10 @@ export class HomeComponent implements OnInit {
    }
 
   ngOnInit() {
-    firebase.auth().onAuthStateChanged((user) => {
+/*     firebase.auth().onAuthStateChanged((user) => {
       this.email = user.email
       //this.atualizarTimeline()
-    })
+    }) */
   }
 
   public sair(): void {
@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit {
 
   public atualizarTimeline(): void{
 
-   this.bd.consultaUsuarios()
+  /*  this.bd.consultaUsuarios()
    .then((listaUsuarios: any) =>{
      console.log('usuario component === ', listaUsuarios)
      this.usuarios = listaUsuarios
@@ -66,7 +66,7 @@ export class HomeComponent implements OnInit {
      console.log(' ', this.isArtist)
    })
 
-   this.publicacoes.atualizarTimeLine()
+   this.publicacoes.atualizarTimeLine() */
   }
   
 }

@@ -297,40 +297,18 @@ export class Bd {
 
         return new Promise((resolve, reject)=>{
             //console.log(this.lista.length)
-            for(let i=0; i<this.lista.length; i++){
-                if(this.lista.includes(this.listaSeguindo[i])){
-                    firebase.database().ref(`publicacoes/${this.listaSeguindo[i]}`)
+/*             for(let i=0; i<this.lista.length; i++){ */
+/*                 if(this.lista.includes(this.listaSeguindo[i])){ */
+                    firebase.database().ref(`publicacoes/aGFtbW91ZHNhQG91dGxvb2suY29t`)
                     .orderByKey()
                     .once('value')
                     .then((snapshot: any) => {                       
                         snapshot.forEach((childSnapshot: any) => {
                             let publicacao = childSnapshot.val()
                             publicacao.key = childSnapshot.key
-                        
-                             //insere nome do usuario da publicação
-                            publicacao.nome_usuario = atob(this.listaSeguindo[i])
-                            for(let i=0; i<this.listaTodosUsuarios.length; i++){
-                                if(publicacao.nome_usuario == this.listaTodosUsuarios[i].usuario.email){
-                                    publicacao.nome_usuario = this.listaTodosUsuarios[i].nome_usuario
-                                    publicacao.isArtist = this.listaTodosUsuarios[i].usuario.isArtist
-                                    this.listaPublicacoes.push(publicacao)
-                                }
-                            }    
-                            childSnapshot.forEach((child: any) => {
-                                let desc = child.val()
-                                console.log(child.key)
-                                this.listaComentarios = []
-                                if(child.key == 'comentarios'){
-                                    child.forEach((coment: any) => {
-                                        publicacao.listaComentarios =[]
-                                        let comentario = coment.val()
-                                        console.log(coment.comentario)
-                                                                                        
-                                        this.listaComentarios.push(comentario)
-                                        publicacao.listaComentarios = this.listaComentarios
-                                    })
-                                }
-                            })
+
+                            this.listaPublicacoes.push(publicacao)
+    
 
                         })                
                         return this.listaPublicacoes.reverse()  
@@ -348,9 +326,9 @@ export class Bd {
                         })
                         resolve(listaPublicacoes)
                      }) 
-                }
+/*                 }
 
-            }
+            } */
         }) 
 
     }

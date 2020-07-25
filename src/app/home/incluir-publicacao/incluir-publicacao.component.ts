@@ -36,8 +36,11 @@ export class IncluirPublicacaoComponent implements OnInit {
 
   ngOnInit() {
     firebase.auth().onAuthStateChanged((user) => {
-      this.email = user.email
-      this.consultaUsuario()
+      if(user != null){
+        this.email = user.email
+        this.consultaUsuario()  
+      }
+
     })
   } 
 

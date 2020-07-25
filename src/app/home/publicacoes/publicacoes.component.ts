@@ -31,11 +31,17 @@ export class PublicacoesComponent implements OnInit {
   constructor(private bd: Bd, private router: Router) { }
 
   ngOnInit() {
-    firebase.auth().onAuthStateChanged((user) => {
-      this.email = user.email
-      this.atualizarLista()
-      this.bd.consultaListaSeguidores(this.email)
-    })
+    var cUser = firebase.auth().currentUser;
+    console.log('CURRENT USER  ', cUser);
+    if(cUser != null){
+      firebase.auth().onAuthStateChanged((user) => {
+        this.email = user.email
+        console.log('EMAIL USUARIO LOGADO:: ', this.email)
+        this.bd.consultaListaSeguidores(this.email)
+      })
+    }
+    this.atualizarLista()
+    
   }
 
   public atualizarLista(): void {
@@ -44,11 +50,14 @@ export class PublicacoesComponent implements OnInit {
       .then((listaUsuarios: any) =>{
         console.log('usuario component === ', listaUsuarios)
         this.usuarios = listaUsuarios
-        for(let i in this.usuarios){
-          if(this.usuarios[i].usuario.email == this.email){
-            this.userAtualId = this.usuarios[i].key;
+        if(this.email != null){
+          for(let i in this.usuarios){
+            if(this.usuarios[i].usuario.email == this.email){
+              this.userAtualId = this.usuarios[i].key;
+            }
           }
         }
+
         this.atualizarTimeLine()
       })
 
@@ -61,9 +70,11 @@ export class PublicacoesComponent implements OnInit {
 
   public atualizarTimeLine(): void {
     this.publicacoes = ['']
-    for(let i=0;i<this.usuarios.length;i++){
-      if(this.usuarios[i].usuario.email == this.email){
-        this.usuarioAtual = this.usuarios[i].nome_usuario
+    if(this.email != null){
+      for(let i=0;i<this.usuarios.length;i++){
+        if(this.usuarios[i].usuario.email == this.email){
+          this.usuarioAtual = this.usuarios[i].nome_usuario
+        }
       }
     }
     
@@ -76,24 +87,25 @@ export class PublicacoesComponent implements OnInit {
         }
         this.publicacoes = listaPublicacoes.splice(0, 3)
       })    
-
-    this.bd.consultaListaCarrinho(this.email)
-    .then((success: any) => {
-        this.listaCarrinho = success;
-        for(let i in this.listaCarrinho){
-          this.listaCarrinhoKeys.push(this.listaCarrinho[i].key)
-          this.mapKeyQtd.set(this.listaCarrinho[i].key, this.listaCarrinho[i].qtd)
-          this.qtdItens = this.qtdItens + this.listaCarrinho[i].qtd
-          console.log('qtdItens', this.listaCarrinho[i].qtd)
-        }
-        
-    })
-  
-    this.bd.consultarTotalCarrinho(this.email)
-    .then((success: any) => {
-        console.log('TOTAL CARRINHO:: ', success.totalCarrinho)
-        this.carrinhoTotal = success.totalCarrinho
-    })
+    if(this.email != null){
+      this.bd.consultaListaCarrinho(this.email)
+      .then((success: any) => {
+          this.listaCarrinho = success;
+          for(let i in this.listaCarrinho){
+            this.listaCarrinhoKeys.push(this.listaCarrinho[i].key)
+            this.mapKeyQtd.set(this.listaCarrinho[i].key, this.listaCarrinho[i].qtd)
+            this.qtdItens = this.qtdItens + this.listaCarrinho[i].qtd
+            console.log('qtdItens', this.listaCarrinho[i].qtd)
+          }
+          
+      })
+    
+      this.bd.consultarTotalCarrinho(this.email)
+      .then((success: any) => {
+          console.log('TOTAL CARRINHO:: ', success.totalCarrinho)
+          this.carrinhoTotal = success.totalCarrinho
+      })
+    }
   }
   public apagarPublicacao(publicacaoKey: string): void{
     this.publicacaoKey = publicacaoKey
@@ -156,14 +168,19 @@ export class PublicacoesComponent implements OnInit {
   }
 
   public adicionar(prodCode: string, qtd: any, valor: string){
-    this.listaCarrinho.push({key: prodCode, qtd: qtd});
-    this.listaCarrinhoKeys.push(prodCode)
-    this.mapKeyQtd.set(prodCode, qtd)
-    this.qtdItens++;
-    this.carrinhoTotal += parseFloat(valor.replace(',','.'))
-    this.carrinhoTotal = parseFloat(this.carrinhoTotal.toFixed(2))
-    this.bd.inserirListaCarrinho(this.email, this.listaCarrinho)
-    this.bd.inserirTotalCarrinho(this.email, this.carrinhoTotal)
+    if(this.email != null){
+      this.listaCarrinho.push({key: prodCode, qtd: qtd});
+      this.listaCarrinhoKeys.push(prodCode)
+      this.mapKeyQtd.set(prodCode, qtd)
+      this.qtdItens++;
+      this.carrinhoTotal += parseFloat(valor.replace(',','.'))
+      this.carrinhoTotal = parseFloat(this.carrinhoTotal.toFixed(2))
+      this.bd.inserirListaCarrinho(this.email, this.listaCarrinho)
+      this.bd.inserirTotalCarrinho(this.email, this.carrinhoTotal)
+    }else{
+      this.router.navigate([''])
+    }
+
   }
 
   public adicionarMesmoItem(prodCode: string, qtd: any, valor: string){
@@ -203,6 +220,11 @@ export class PublicacoesComponent implements OnInit {
 
   public meuCarrinho(){
     this.router.navigate(['/carrinho'])
+  }
+
+  public meuPerfil(): void {
+    this.router.navigate(['/perfil'])
+    
   }
 
   public pageChange(num: any){

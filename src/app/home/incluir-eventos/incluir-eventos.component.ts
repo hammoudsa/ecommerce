@@ -39,7 +39,10 @@ export class IncluirEventosComponent implements OnInit {
 
   ngOnInit() {
     firebase.auth().onAuthStateChanged((user) => {
-      this.email = user.email
+      if(user != null){
+          this.email = user.email  
+      }
+  
     })
   }
 

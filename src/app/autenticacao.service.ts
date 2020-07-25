@@ -90,7 +90,8 @@ export class Autenticacao {
     }
 
     public sair(){
-        localStorage.removeItem('idToken')
+        firebase.auth().signOut;
+        localStorage.removeItem('idToken');
     }
 
 
