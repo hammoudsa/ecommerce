@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
   }
 
   public autenticar(): void {
-    if(this.formulario.value.email == null || this.formulario.value.senha == null){
+    if(this.formulario.value.email == '' || this.formulario.value.senha == ''){
       let msg = "Preencha os campos de login"
       document.getElementById("txtmsg").textContent = msg
     }else{

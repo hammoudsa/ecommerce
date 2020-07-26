@@ -1,6 +1,6 @@
 <div class="card" style="width: 20rem;">
   <div class="card-body">
-    <div class="card-title"></div>
+    <div class="card-title">BABY'S CULTURE</div>
     
     <form [formGroup]="formulario" (ngSubmit)="autenticar()">
       <div class="form-group">
@@ -19,7 +19,7 @@
           formControlName="senha"
         >
       </div>
-      <button type="submit" class="btn btn-primary btn-sm btn-block">Entrar</button>
+      <button type="submit" style="background-color: #af12b9; border-color: #af12b9;" class="btn btn-primary btn-sm btn-block">Entrar</button>
     </form>
     <hr />
 
@@ -36,10 +36,6 @@
     <hr/>
     <p class="card-text">
       Não tem uma conta? <a href="#" (click)="exibirPainelCadastro()" class="card-link">Cadastre-se</a>
-    </p> 
-    <hr/>
-    <p class="card-text">
-      É um artista? <a href="#" (click)="exibirPainelCadastroArtista()" class="card-link">Cadastre-se como artista</a>
     </p> 
   </div>
 </div>

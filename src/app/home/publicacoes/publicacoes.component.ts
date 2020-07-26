@@ -26,16 +26,19 @@ export class PublicacoesComponent implements OnInit {
   public paginaAtual = 1;
   public qtdPaginasArray = [];
   public qtdPaginas;
+  public administrador: boolean;
 
 
   constructor(private bd: Bd, private router: Router) { }
 
   ngOnInit() {
+
     var cUser = firebase.auth().currentUser;
     console.log('CURRENT USER  ', cUser);
     if(cUser != null){
       firebase.auth().onAuthStateChanged((user) => {
         this.email = user.email
+        this.administrador = this.email == 'hammoudsa@outlook.com' ? true : false;
         console.log('EMAIL USUARIO LOGADO:: ', this.email)
         this.bd.consultaListaSeguidores(this.email)
       })

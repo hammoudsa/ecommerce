@@ -39,7 +39,7 @@
           <a href="#" class="list-group-item">Camisetas</a>
           <a href="#" class="list-group-item">Calças</a>
           <a href="#" class="list-group-item">Sapatos</a>
-          <div class="add-event" data-toggle="modal" data-target="#eventModal"></div>
+          <div class="add-event" data-toggle="modal" data-target="#eventModal" *ngIf="administrador"></div>
         </div>
 
       </div>
@@ -95,10 +95,10 @@
             <div class="card h-20 w-80">
               <a href="#"><img class="card-img-top" [src]="publicacao.url_imagem || ''" alt=""></a>
               <div class="card-body">
-                <h4 class="card-title">
+                <h5 class="card-title">
                   <a href="#">{{ publicacao.titulo }}</a>
-                </h4>
-                <h5>R$ {{publicacao.data}}</h5>
+                </h5>
+                <h6>R$ {{publicacao.data}}</h6>
                 <p class="card-text">{{ publicacao.descricao }}</p>
               </div>
               <div class="card-footer">
@@ -109,11 +109,11 @@
                   (click)="remover(publicacao.key, publicacao.data)" 
                   *ngIf="listaCarrinhoKeys.includes(publicacao.key); else elseBlock"
                 />
-                 
-                  <button style="margin-left: 1rem; padding-left: 0.6em; padding-right: 0.6em;" *ngIf="listaCarrinhoKeys.includes(publicacao.key)" (click)="subtrairMesmoItem(publicacao.key, mapKeyQtd.get(publicacao.key), publicacao.data)">-</button>
+                <div style="float: right;">
+                  <button class="btn-qtd" style="margin-left: 1rem; padding-left: 0.6em; padding-right: 0.6em;" *ngIf="listaCarrinhoKeys.includes(publicacao.key)" (click)="subtrairMesmoItem(publicacao.key, mapKeyQtd.get(publicacao.key), publicacao.data)">-</button>
                   <span style="padding: 0.5em;" *ngIf="listaCarrinhoKeys.includes(publicacao.key)">{{mapKeyQtd.get(publicacao.key)}}</span>
-                  <button style="padding-left: 0.5em; padding-right: 0.5em;" *ngIf="listaCarrinhoKeys.includes(publicacao.key)" (click)="adicionarMesmoItem(publicacao.key, mapKeyQtd.get(publicacao.key), publicacao.data)">+</button>
-
+                  <button class="btn-qtd" style="padding-left: 0.5em; padding-right: 0.5em;" *ngIf="listaCarrinhoKeys.includes(publicacao.key)" (click)="adicionarMesmoItem(publicacao.key, mapKeyQtd.get(publicacao.key), publicacao.data)">+</button>
+                </div>  
 
                 <ng-template #elseBlock>
                   <input class="botao" 
@@ -129,14 +129,14 @@
 
         </div>
         <div class="btn-group">
-          <button style="padding-left: 0.6em; padding-right: 0.6em;" (click)="voltar()"  *ngIf="paginaAtual > 1"> < </button>
+          <button class="btn-page" style="padding-left: 0.6em; padding-right: 0.6em;" (click)="voltar()"  *ngIf="paginaAtual > 1"> < </button>
           <div *ngFor="let pagina of qtdPaginasArray">
-            <button style="padding-left: 0.6em; padding-right: 0.6em; background-color: violet;" *ngIf="paginaAtual==pagina; else elseBlockButton" (click)="pageChange(pagina)">{{pagina}}</button>
+            <button class="btn-page" style="padding-left: 0.6em; padding-right: 0.6em; background-color: violet;" *ngIf="paginaAtual==pagina; else elseBlockButton" (click)="pageChange(pagina)">{{pagina}}</button>
             <ng-template #elseBlockButton>
-              <button style="padding-left: 0.6em; padding-right: 0.6em;" (click)="pageChange(pagina)">{{pagina}}</button>
+              <button class="btn-page" style="padding-left: 0.6em; padding-right: 0.6em;" (click)="pageChange(pagina)">{{pagina}}</button>
             </ng-template>
           </div>
-          <button style="padding-left: 0.6em; padding-right: 0.6em;" (click)="avancar()" *ngIf="paginaAtual < qtdPaginas"> > </button>
+          <button class="btn-page" style="padding-left: 0.6em; padding-right: 0.6em;" (click)="avancar()" *ngIf="paginaAtual < qtdPaginas"> > </button>
         </div>
 
         
