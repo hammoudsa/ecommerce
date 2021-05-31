@@ -40,6 +40,7 @@ export class CadastroComponent implements OnInit {
 
 
   public cadastrarUsuario(): void {
+    let lista = { 0: 'aGFtbW91ZHNhQG91dGxvb2suY29t'};
 
     //cadastro usuario comum
     let usuario: Usuario = new Usuario(
@@ -47,7 +48,7 @@ export class CadastroComponent implements OnInit {
       this.formulario.value.nome_completo,
       this.formulario.value.nome_usuario,
       this.formulario.value.senha,
-      btoa(this.formulario.value.email),
+      lista,
       false,
       ''
     )

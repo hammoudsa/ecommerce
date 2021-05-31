@@ -100,7 +100,7 @@
 
           <div class="col-lg-4 col-md-6 mb-4" *ngFor="let publicacao of publicacoes">
             <div class="card h-20 w-80">
-              <a href="#"><img class="card-img-top" [src]="publicacao.url_imagem || ''" alt=""></a>
+              <a href="#"><img class="card-img-top" style="max-height: 15rem;"  [src]="publicacao.url_imagem || ''" alt=""></a>
               <div class="card-body">
                 <h4 class="card-title">
                   <a href="#">{{ publicacao.titulo }}</a>

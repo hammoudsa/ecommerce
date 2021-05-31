@@ -534,6 +534,27 @@ export class Bd {
             })          
         }) 
     }
+
+    public cadastrarPedido(pedido: any): void {
+
+        if(pedido.numeroPedido != null){
+            firebase.database().ref(`pedidos/${pedido.userId}/${pedido.numeroPedido}`)
+            .update({'pedido': pedido})
+            .then((resposta: any) => {
+                return resposta.key
+            })
+        }else{
+            firebase.database().ref(`pedidos/${pedido.userId}`)
+            .push( {pedido: pedido})
+            .then((resposta: any) => {
+                return resposta.key
+            })
+            
+        }
+             
+
+      
+    }
 }
 
 

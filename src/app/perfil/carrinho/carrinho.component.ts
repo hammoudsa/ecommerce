@@ -47,11 +47,6 @@ export class CarrinhoComponent implements OnInit {
         this.atualizarTimeLine()
       })
 
-      this.bd.consultaArtistas()
-      .then((listaArtistas: any) =>{
-        console.log('artista component === ', listaArtistas)
-     
-      })
   }
 
   public atualizarTimeLine(): void {
@@ -70,21 +65,24 @@ export class CarrinhoComponent implements OnInit {
             this.listaCarrinhoKeys.push(this.listaCarrinho[i].key)
             this.mapKeyQtd.set(this.listaCarrinho[i].key, this.listaCarrinho[i].qtd)
             this.qtdItens += this.listaCarrinho[i].qtd
-            console.log('qtdItens', this.listaCarrinho[i].qtd)
           }
-          console.log('listaCarrinhoKeys', this.listaCarrinhoKeys)
           this.bd.consultaPublicacoesCarrinho(this.listaCarrinhoKeys)
           .then((listaPublicacoes: any)=>{
             this.publicacoes = listaPublicacoes
-            console.log('LISTA PUBLICAÇÕES',this.publicacoes)
+            for(let item of this.publicacoes){
+              this.carrinhoTotal += ( parseFloat(item.data.replace(',','.')) * this.mapKeyQtd.get(item.key) )
+            }
+
+            this.carrinhoTotal = parseFloat(this.carrinhoTotal.toFixed(2))
+            this.bd.inserirTotalCarrinho(this.email, this.carrinhoTotal)
           })    
       })
     
-    this.bd.consultarTotalCarrinho(this.email)
+/*     this.bd.consultarTotalCarrinho(this.email)
       .then((success: any) => {
           console.log('TOTAL CARRINHO:: ', success.totalCarrinho)
           this.carrinhoTotal = success.totalCarrinho
-      })
+      }) */
     
   }
 
@@ -145,6 +143,22 @@ export class CarrinhoComponent implements OnInit {
 
   public home(){
     this.router.navigate(['/home'])
+  }
+
+  public comprar(){
+    //TODO: Consultar a key do pedido para poder dar update
+    let key = '-Mb-1PiFUBuHnrY1N_hm';
+
+/*     let pedido = {
+      numeroPedido: key,
+      userId: this.userAtualId,
+      listaItens: this.listaCarrinho,
+      valorTotal: this.carrinhoTotal
+    };
+
+    console.log(pedido);
+
+   this.bd.cadastrarPedido(pedido); */
   }
 
 }
