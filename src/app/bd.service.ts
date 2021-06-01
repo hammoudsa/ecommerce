@@ -537,23 +537,39 @@ export class Bd {
 
     public cadastrarPedido(pedido: any): void {
 
-        if(pedido.numeroPedido != null){
-            firebase.database().ref(`pedidos/${pedido.userId}/${pedido.numeroPedido}`)
+        if(pedido.key != null){
+            firebase.database().ref(`pedidos/${pedido.userId}/${pedido.key}`)
             .update({'pedido': pedido})
             .then((resposta: any) => {
+                this.atualizarUltimoPedido(pedido.numeroPedido);
                 return resposta.key
             })
         }else{
             firebase.database().ref(`pedidos/${pedido.userId}`)
             .push( {pedido: pedido})
             .then((resposta: any) => {
+                this.atualizarUltimoPedido(pedido.numeroPedido);
                 return resposta.key
             })
             
         }
-             
+    }
 
-      
+    public consultarUltimoPedido(){
+        let query = firebase.database().ref('ultimoPedido/ultimoPedido')
+        return new Promise((resolve, reject)=>{
+            query.on('value', snap => {
+                resolve(snap.val())
+            })
+        })
+    }
+
+    public atualizarUltimoPedido(ultimoPedido: any){
+        firebase.database().ref(`ultimoPedido`)
+        .update({'ultimoPedido': ultimoPedido})
+        .then((resposta: any) => {
+    
+        })
     }
 }
 

@@ -59,6 +59,7 @@ export class CarrinhoComponent implements OnInit {
     
     this.bd.consultaListaCarrinho(this.email)
       .then((success: any) => {
+          this.carrinhoTotal = 0;
           this.listaCarrinho = success;
           this.qtdItens = 0;
           for(let i in this.listaCarrinho){
@@ -146,19 +147,33 @@ export class CarrinhoComponent implements OnInit {
   }
 
   public comprar(){
-    //TODO: Consultar a key do pedido para poder dar update
+    //TODO: na verdade sempre vai cadastrar um pedido novo, por enquanto atualiza apenas para efeito de testes
+    //TODO: APÓS TESTES TIRAR PARTE DA KEY E DO UPDATE, SEMPRE VAI SER CADASTRO
     let key = '-Mb-1PiFUBuHnrY1N_hm';
 
-/*     let pedido = {
-      numeroPedido: key,
-      userId: this.userAtualId,
-      listaItens: this.listaCarrinho,
-      valorTotal: this.carrinhoTotal
-    };
+    //TODO: Fazer validação cadastral (endereço, etc.. ) antes de cadastrar pedido
 
-    console.log(pedido);
+    let numeroPedido = 0;
+    this.bd.consultarUltimoPedido()
+    .then((success: any) => {
+      numeroPedido = parseInt(success) + 1;
 
-   this.bd.cadastrarPedido(pedido); */
+      let pedido = {
+        key: key,
+        numeroPedido: numeroPedido,
+        userId: this.userAtualId,
+        listaItens: this.listaCarrinho,
+        valorTotal: this.carrinhoTotal
+      };
+
+      console.log(pedido);
+      this.bd.cadastrarPedido(pedido); 
+    })
+
+
+
+
+
   }
 
 }
