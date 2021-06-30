@@ -154,8 +154,10 @@ export class CarrinhoComponent implements OnInit {
     //TODO: Fazer validação cadastral (endereço, etc.. ) antes de cadastrar pedido
 
     let numeroPedido = 0;
+
     this.bd.consultarUltimoPedido()
     .then((success: any) => {
+      console.log('ultimo pedido:: ' + success);
       numeroPedido = parseInt(success) + 1;
 
       let pedido = {
@@ -167,7 +169,10 @@ export class CarrinhoComponent implements OnInit {
       };
 
       console.log(pedido);
-      this.bd.cadastrarPedido(pedido); 
+      //this.bd.cadastrarPedido(pedido); 
+
+      this.bd.atualizarUltimoPedido(numeroPedido);
+      //TODO: Limpar carrinho
     })
 
 

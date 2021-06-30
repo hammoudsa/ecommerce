@@ -69,8 +69,7 @@ export class PublicacoesComponent implements OnInit {
     
     this.bd.consultaPublicacoes()
       .then((listaPublicacoes: any)=>{
-        
-        this.qtdPaginas = Math.round(listaPublicacoes.length / 3) + (listaPublicacoes.length%3)
+        this.qtdPaginas = Math.round(listaPublicacoes.length / 3) + (listaPublicacoes.length%2)
         for(let i=1; i<this.qtdPaginas+1; i++){
           this.qtdPaginasArray.push(i);
         }

@@ -179,3 +179,44 @@ body {
   margin-left: 50px;
   margin-top: -25px;
 }
+
+.paginaAtual {
+  margin-left: 0.5rem; 
+  padding-left: 0.6em;
+  padding-right: 0.6em;
+  background-color: violet;
+  border-style: double;
+  border-color: violet;
+}
+
+.product-title{
+  display: block;/* or inline-block */
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  overflow: hidden;
+  max-height: 3.6em;
+  line-height: 1.8em;
+}
+
+.card-title{
+  height: 5.4rem;
+  padding: 1rem;
+
+}
+
+.card-img-top{
+  width: 15.3rem;
+  height: 15.1rem;
+}
+
+.card-body{
+  padding: 0rem !important;
+}
+
+.card-price{
+  padding: 1rem;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
+  margin-bottom: 0rem !important;
+}

@@ -567,9 +567,7 @@ export class Bd {
     public atualizarUltimoPedido(ultimoPedido: any){
         firebase.database().ref(`ultimoPedido`)
         .update({'ultimoPedido': ultimoPedido})
-        .then((resposta: any) => {
-    
-        })
+        .then((resposta: any) => {  })
     }
 }
 
